@@ -87,8 +87,14 @@ export const deleteStelling = mutation(
       .filter((q) => q.eq(q.field("_id"), id))
       .first();
 
+    const stemmen = await db
+      .query("stemmen")
+      .filter((q) => q.eq(q.field("stellingId"), id))
+      .collect();
+
     if (!document) return;
 
     await db.delete(document._id);
+    await Promise.all(stemmen.map((stem) => db.delete(stem._id)));
   }
 );
