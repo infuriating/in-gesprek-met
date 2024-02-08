@@ -44,7 +44,7 @@ export default function Stellingen(params: {
             </CardContent>
             <CardFooter>
               <Link href={`/stellingen/${stelling.slug}`}>
-                <Button variant={"outline"}>Bekijk deze stelling</Button>
+                <Button>Bekijk deze stelling</Button>
               </Link>
             </CardFooter>
           </Card>
