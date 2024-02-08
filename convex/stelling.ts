@@ -72,7 +72,11 @@ export const updateStelling = mutation(
 
     await db.replace(document._id, {
       ...document,
-      stelling,
+      slug: stelling
+        .toLowerCase()
+        .replace(/[^a-zA-Z0-9]/g, "")
+        .replace("/ /g", "-"),
+      stelling: stelling,
     });
   }
 );
