@@ -30,16 +30,6 @@ export default function AddStellingForm() {
   const handleMutation = (e: any) => {
     e.preventDefault();
 
-    if (formData.stelling.length < 10) {
-      toast.error("Stelling moet minimaal 10 karakters bevatten");
-      return;
-    }
-
-    if (formData.stelling.length > 40) {
-      toast.error("Stelling mag maximaal 40 karakters bevatten");
-      return;
-    }
-
     addMutation({
       stelling: formData.stelling,
       keuzes: {
