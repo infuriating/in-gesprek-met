@@ -30,7 +30,7 @@ export default function LatestThreeStellingen(props: {
       <Link className="px-4" href="/stellingen">
         <Button className="flex gap-x-2 text-lg" variant={"link"}>
           <ArrowRightSquareIcon className="h-10 w-10" />
-          <p>Bekijk alle stellingen</p>
+          <p className="text-secondary-foreground">Bekijk alle stellingen</p>
         </Button>
       </Link>
       <div className="grid lg:grid-cols-3 gap-x-6 gap-y-4">
@@ -57,7 +57,7 @@ export default function LatestThreeStellingen(props: {
               <CardFooter>
                 {user ? (
                   <Link href={`/stellingen/${stelling.slug}`}>
-                    <Button variant={"outline"}>Bekijk deze stelling</Button>
+                    <Button>Bekijk deze stelling</Button>
                   </Link>
                 ) : (
                   <Button variant={"outline"} disabled>
