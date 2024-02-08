@@ -58,11 +58,9 @@ export const updateStelling = mutation(
     {
       id,
       stelling,
-      door,
     }: {
       id: string;
       stelling: string;
-      door: string;
     }
   ) => {
     const document = await db
@@ -75,7 +73,6 @@ export const updateStelling = mutation(
     await db.replace(document._id, {
       ...document,
       stelling,
-      door,
     });
   }
 );
