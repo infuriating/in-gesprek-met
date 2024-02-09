@@ -17,6 +17,7 @@ import Tabel from "@/components/Tabel";
 import { ArrowRightSquareIcon } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
+import { getTimeAgo } from "@/lib/functions";
 
 export default function LatestThreeStellingen(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getLatestThree>;
@@ -52,7 +53,17 @@ export default function LatestThreeStellingen(props: {
             <Card>
               <CardHeader>
                 <CardTitle>{stelling.stelling}</CardTitle>
-                <CardDescription>gemaakt door {stelling.door}</CardDescription>
+                <CardDescription>
+                  <p>
+                    gemaakt door{" "}
+                    <span className="text-secondary-foreground font-medium">
+                      {stelling.door}
+                    </span>
+                  </p>
+                  <p className="text-xs pt-0.5">
+                    {getTimeAgo(stelling._creationTime)}
+                  </p>
+                </CardDescription>
               </CardHeader>
               <CardContent className="pl-2">
                 <Tabel stelling={stelling} height={200} />

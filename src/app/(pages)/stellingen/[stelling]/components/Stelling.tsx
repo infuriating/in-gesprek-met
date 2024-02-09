@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import Tabel from "../../../../../components/Tabel";
 import { useUser } from "@clerk/nextjs";
+import { getTimeAgo } from "@/lib/functions";
 
 export default function Stelling(params: {
   preloadedStelling: Preloaded<typeof api.stelling.getStelling>;
@@ -54,9 +55,10 @@ export default function Stelling(params: {
         <h2 className="text-2xl font-bold">{stelling.stelling}</h2>
         <p className="text-muted-foreground">
           Stelling van{" "}
-          <span className="font-bold text-secondary-foreground">
+          <span className="font-medium text-secondary-foreground">
             {stelling.door}
           </span>
+          <p className="text-xs pt-0.5">{getTimeAgo(stelling._creationTime)}</p>
         </p>
       </div>
 
