@@ -12,5 +12,5 @@ export default function RoleChecker({
   const router = useRouter();
   if (role !== "admin") router.push("/");
 
-  return <div>{children}</div>;
+  return children;
 }
