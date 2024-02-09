@@ -8,8 +8,15 @@ import { Skeleton } from "./ui/skeleton";
 import { ModeToggle } from "./ui/mode-toggle";
 import Link from "next/link";
 
-export default function Header() {
-  const { user } = useUser();
+export default function Header({
+  isSignedIn,
+  imageUrl,
+  role,
+}: {
+  isSignedIn: boolean;
+  imageUrl: string;
+  role: unknown;
+}) {
   return (
     <div className="flex justify-between items-center w-full h-16 px-8 border-b">
       <div className="flex items-center gap-x-4">
@@ -25,15 +32,20 @@ export default function Header() {
         </Link>
       </div>
       <div className="flex items-center gap-x-4">
-        {user ? (
+        {role === "admin" && (
+          <Link href="/dashboard">
+            <Button variant={"outline"}>Dashboard</Button>
+          </Link>
+        )}
+        {isSignedIn ? (
           <>
             <Button>
               <SignOutButton>Log uit</SignOutButton>
             </Button>
             <Image
-              src={user.imageUrl}
+              src={imageUrl}
               alt="user"
-              className="h-10 rounded-full"
+              className="h-10 rounded-full hidden md:block"
               width={40}
               height={40}
             />
