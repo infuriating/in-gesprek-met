@@ -40,7 +40,7 @@ export default function Header({
         {isSignedIn ? (
           <>
             <SignOutButton>
-              <Button>Log out</Button>
+              <Button>Log uit</Button>
             </SignOutButton>
             <Image
               src={imageUrl}
