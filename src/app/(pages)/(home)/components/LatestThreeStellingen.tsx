@@ -33,6 +33,9 @@ export default function LatestThreeStellingen(props: {
           <p className="text-secondary-foreground">Bekijk alle stellingen</p>
         </Button>
       </Link>
+      <p className="py-1 font-medium text-muted-foreground">
+        De laatste drie stellingen
+      </p>
       <div className="grid lg:grid-cols-3 gap-x-6 gap-y-4">
         {stellingen.map((stelling, i) => (
           <motion.div
