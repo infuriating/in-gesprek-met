@@ -39,15 +39,15 @@ export default function Stellingen(params: {
             <CardHeader>
               <CardTitle>{stelling.stelling}</CardTitle>
               <CardDescription>
-                <p>
-                  gemaakt door{" "}
-                  <span className="text-secondary-foreground font-medium">
-                    {stelling.door}
-                  </span>
-                </p>
-                <p className="text-xs pt-0.5">
+                gemaakt door{" "}
+                <span className="text-secondary-foreground font-medium">
+                  {" "}
+                  {stelling.door}
+                  <br />
+                </span>
+                <span className="text-xs pt-0.5">
                   {getTimeAgo(stelling._creationTime)}
-                </p>
+                </span>
               </CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
