@@ -24,10 +24,12 @@ export const addStem = mutation(
       userId,
       id,
       keuze,
+      keuzeOptie,
     }: {
       userId: string;
       id: string;
       keuze: string;
+      keuzeOptie: string;
     }
   ) => {
     const stelling = await db
@@ -41,29 +43,30 @@ export const addStem = mutation(
       .filter((q) => q.eq(q.field("stellingId"), id))
       .first();
 
-    console.log(userId);
-
-    console.log("before", stelling);
     if (!stelling) return;
 
     if (stem) {
-      if (stem.keuze === keuze) {
+      if (stem.keuzeOptie === keuzeOptie) {
         await db.delete(stem._id);
-        stelling.keuzes[keuze as keyof typeof stelling.keuzes] -= 1;
+        stelling.keuzes[
+          keuzeOptie as keyof typeof stelling.keuzes
+        ].stemmen -= 1;
         await db.replace(stelling._id, stelling);
         return;
       }
-      stelling.keuzes[stem.keuze as keyof typeof stelling.keuzes] -= 1;
+      stelling.keuzes[
+        stem.keuzeOptie as keyof typeof stelling.keuzes
+      ].stemmen -= 1;
       await db.delete(stem._id);
     }
 
-    stelling.keuzes[keuze as keyof typeof stelling.keuzes] += 1;
-    console.log("after", stelling);
+    stelling.keuzes[keuzeOptie as keyof typeof stelling.keuzes].stemmen += 1;
 
     await db.insert("stemmen", {
       userId,
       stellingId: id,
       keuze,
+      keuzeOptie,
     });
     await db.replace(stelling._id, stelling);
   }
