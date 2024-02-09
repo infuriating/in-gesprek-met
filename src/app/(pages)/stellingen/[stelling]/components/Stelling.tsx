@@ -32,25 +32,19 @@ export default function Stelling(params: {
   if (!stelling) return <></>;
   if (!userId) return <></>;
 
-  const stem = async (id: string, keuze: string) => {
+  const stem = async (id: string, keuze: string, keuzeOptie: string) => {
     setVorigeKeuze(keuze);
-    await stemMutation({ userId, id, keuze });
+    await stemMutation({ userId, id, keuze, keuzeOptie });
 
     if (huidigeStem?.keuze === keuze) {
-      toast.success(
-        `Uw keuze ${keuze.toUpperCase()} voor de stelling is verwijderd!`
-      );
+      toast.success(`Uw keuze ${keuze} voor de stelling is verwijderd!`);
       return;
     }
 
     if (vorigeKeuze && vorigeKeuze !== keuze) {
-      toast.success(
-        `Uw keuze is gewijzigd van ${vorigeKeuze.toUpperCase()} naar ${keuze.toUpperCase()}!`
-      );
+      toast.success(`Uw keuze is gewijzigd van ${vorigeKeuze} naar ${keuze}!`);
     } else {
-      toast.success(
-        `Uw keuze ${keuze.toUpperCase()} voor de stelling is geregistreerd!`
-      );
+      toast.success(`Uw keuze ${keuze} voor de stelling is geregistreerd!`);
     }
   };
 
@@ -69,28 +63,46 @@ export default function Stelling(params: {
       {huidigeStem?.keuze ? (
         <p className="pb-4">
           Uw huidige keuze is:
-          <span className="font-bold">
-            {" "}
-            {huidigeStem.keuze.toLocaleUpperCase()}
-          </span>
+          <span className="font-bold"> {huidigeStem.keuze}</span>
         </p>
       ) : (
         <p className="pb-4">U heeft nog niet gestemd!</p>
       )}
-      <div className="grid md:grid-cols-3 gap-x-6 gap-y-2">
-        <Button onClick={() => stem(stelling._id, "voor")}>Stem voor</Button>
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-2">
         <Button
-          variant={"destructive"}
-          onClick={() => stem(stelling._id, "tegen")}
+          onClick={() =>
+            stem(stelling._id, stelling.keuzes.keuze1.naam, "keuze1")
+          }
         >
-          Stem tegen
+          Stem voor {stelling.keuzes.keuze1.naam}
         </Button>
         <Button
           variant={"outline"}
-          onClick={() => stem(stelling._id, "onbeslist")}
+          onClick={() =>
+            stem(stelling._id, stelling.keuzes.keuze2.naam, "keuze2")
+          }
         >
-          Onbeslist
+          Stem voor {stelling.keuzes.keuze2.naam}
         </Button>
+        {stelling.keuzes.keuze3.naam && (
+          <Button
+            onClick={() =>
+              stem(stelling._id, stelling.keuzes.keuze3.naam, "keuze3")
+            }
+          >
+            Stem voor {stelling.keuzes.keuze3.naam}
+          </Button>
+        )}
+        {stelling.keuzes.keuze4.naam && (
+          <Button
+            variant={"outline"}
+            onClick={() =>
+              stem(stelling._id, stelling.keuzes.keuze4.naam, "keuze4")
+            }
+          >
+            Stem voor {stelling.keuzes.keuze4.naam}
+          </Button>
+        )}
       </div>
       <div className="pt-4">
         <Tabel stelling={stelling} />
