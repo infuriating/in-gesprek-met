@@ -39,9 +39,9 @@ export default function Header({
         )}
         {isSignedIn ? (
           <>
-            <Button>
-              <SignOutButton>Log uit</SignOutButton>
-            </Button>
+            <SignOutButton>
+              <Button>Log out</Button>
+            </SignOutButton>
             <Image
               src={imageUrl}
               alt="user"
@@ -52,9 +52,9 @@ export default function Header({
           </>
         ) : (
           <>
-            <Button>
-              <SignInButton>Log in</SignInButton>
-            </Button>
+            <SignInButton>
+              <Button>Log in</Button>
+            </SignInButton>
             <Skeleton className="h-10 w-10 rounded-full" />
           </>
         )}
