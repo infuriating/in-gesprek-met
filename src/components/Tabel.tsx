@@ -35,18 +35,38 @@ export default function Tabel({
   height,
 }: {
   stelling: {
-    keuzes: { voor: number; tegen: number; onbeslist: number };
+    keuzes: {
+      keuze1: { naam: string; stemmen: number };
+      keuze2: { naam: string; stemmen: number };
+      keuze3: { naam: string; stemmen: number };
+      keuze4: { naam: string; stemmen: number };
+    };
   };
   height?: number;
 }) {
+  const { keuze1, keuze2, keuze3, keuze4 } = stelling.keuzes;
+
   return (
     <ResponsiveContainer width={"100%"} height={height ? height : 350}>
       <BarChart
         data={[
-          { name: "Voor", total: stelling.keuzes.voor },
-          { name: "Tegen", total: stelling.keuzes.tegen },
-          { name: "Onbeslist", total: stelling.keuzes.onbeslist },
-        ]}
+          {
+            name: keuze1.naam,
+            total: keuze1.stemmen,
+          },
+          {
+            name: keuze2.naam,
+            total: keuze2.stemmen,
+          },
+          keuze3.naam != "" && {
+            name: keuze3.naam,
+            total: keuze3.stemmen,
+          },
+          keuze4.naam != "" && {
+            name: keuze4.naam,
+            total: keuze4.stemmen,
+          },
+        ].filter(Boolean)}
       >
         <XAxis
           dataKey="name"
