@@ -17,6 +17,18 @@ export const getStem = query({
   },
 });
 
+export const getStemmenFromStelling = query({
+  args: {
+    stellingId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("stemmen")
+      .filter((q) => q.eq(q.field("stellingId"), args.stellingId))
+      .collect();
+  },
+});
+
 export const addStem = mutation(
   async (
     { db },
