@@ -5,11 +5,7 @@ export default defineSchema({
   stellingen: defineTable({
     slug: v.string(),
     stelling: v.string(),
-    keuzes: v.object({
-      voor: v.number(),
-      tegen: v.number(),
-      onbeslist: v.number(),
-    }),
+    keuzes: v.union(v.object({}), v.any()),
     door: v.string(),
   })
     .index("by_slug", ["slug"])
@@ -19,5 +15,6 @@ export default defineSchema({
     userId: v.string(),
     stellingId: v.string(),
     keuze: v.string(),
+    keuzeOptie: v.string(),
   }).index("by_userId", ["userId"]),
 });
