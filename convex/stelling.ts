@@ -31,9 +31,10 @@ export const addStelling = mutation({
   args: {
     stelling: v.string(),
     keuzes: v.object({
-      voor: v.number(),
-      tegen: v.number(),
-      onbeslist: v.number(),
+      keuze1: v.object({ naam: v.string(), stemmen: v.float64() }),
+      keuze2: v.object({ naam: v.string(), stemmen: v.float64() }),
+      keuze3: v.optional(v.object({ naam: v.string(), stemmen: v.float64() })),
+      keuze4: v.optional(v.object({ naam: v.string(), stemmen: v.float64() })),
     }),
     door: v.string(),
   },
@@ -58,9 +59,16 @@ export const updateStelling = mutation(
     {
       id,
       stelling,
+      keuzes,
     }: {
       id: string;
       stelling: string;
+      keuzes: {
+        keuze1: { naam: string; stemmen: number };
+        keuze2: { naam: string; stemmen: number };
+        keuze3?: { naam: string; stemmen: number };
+        keuze4?: { naam: string; stemmen: number };
+      };
     }
   ) => {
     const document = await db
@@ -76,6 +84,7 @@ export const updateStelling = mutation(
         .toLowerCase()
         .replace(/[^a-zA-Z0-9]/g, "")
         .replace("/ /g", "-"),
+      keuzes: keuzes,
       stelling: stelling,
     });
   }
