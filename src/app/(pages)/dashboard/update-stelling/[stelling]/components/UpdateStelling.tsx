@@ -20,8 +20,28 @@ export default function UpdateStelling(params: {
 }) {
   const stelling = usePreloadedQuery(params.preloadedStelling);
   const updateMutation = useMutation(api.stelling.updateStelling);
-  // @ts-expect-error stelling is possibly "null"
-  const [formData, setFormData] = useState({ stelling: stelling.stelling });
+  const [formData, setFormData] = useState({
+    // @ts-expect-error stelling is possibly "null"
+    stelling: stelling.stelling,
+    keuzes: {
+      keuze1: {
+        naam: stelling?.keuzes.keuze1.naam,
+        stemmen: stelling?.keuzes.keuze1.stemmen,
+      },
+      keuze2: {
+        naam: stelling?.keuzes.keuze2.naam,
+        stemmen: stelling?.keuzes.keuze2.stemmen,
+      },
+      keuze3: {
+        naam: stelling?.keuzes.keuze3.naam,
+        stemmen: stelling?.keuzes.keuze3.stemmen,
+      },
+      keuze4: {
+        naam: stelling?.keuzes.keuze4.naam,
+        stemmen: stelling?.keuzes.keuze4.stemmen,
+      },
+    },
+  });
   const router = useRouter();
   const { user } = useUser();
   if (!user) return;
@@ -33,6 +53,7 @@ export default function UpdateStelling(params: {
     updateMutation({
       id: stelling._id,
       stelling: formData.stelling,
+      keuzes: formData.keuzes,
     });
     toast.success(`Stelling ${formData.stelling} is bewerkt!`);
     router.push("/dashboard");
@@ -62,6 +83,78 @@ export default function UpdateStelling(params: {
                 value={formData.stelling}
                 onChange={(e) =>
                   setFormData({ ...formData, stelling: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <Label htmlFor="keuzes">Keuzes</Label>
+              <Input
+                required
+                name="keuzes"
+                value={formData.keuzes.keuze1.naam}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    keuzes: {
+                      ...formData.keuzes,
+                      keuze1: {
+                        naam: e.target.value,
+                        stemmen: 0,
+                      },
+                    },
+                  })
+                }
+              />
+              <Input
+                required
+                name="keuzes"
+                value={formData.keuzes.keuze2.naam}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    keuzes: {
+                      ...formData.keuzes,
+                      keuze2: {
+                        naam: e.target.value,
+                        stemmen: 0,
+                      },
+                    },
+                  })
+                }
+              />
+              <p className="pt-2 text-xs text-muted-foreground">
+                (optionele keuzes)
+              </p>
+              <Input
+                name="keuzes"
+                value={formData.keuzes.keuze3.naam}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    keuzes: {
+                      ...formData.keuzes,
+                      keuze3: {
+                        naam: e.target.value,
+                        stemmen: 0,
+                      },
+                    },
+                  })
+                }
+              />
+              <Input
+                name="keuzes"
+                value={formData.keuzes.keuze4.naam}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    keuzes: {
+                      ...formData.keuzes,
+                      keuze4: {
+                        naam: e.target.value,
+                        stemmen: 0,
+                      },
+                    },
+                  })
                 }
               />
             </div>
