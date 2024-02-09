@@ -21,6 +21,24 @@ export default function AddStellingForm() {
   const addMutation = useMutation(api.stelling.addStelling);
   const [formData, setFormData] = useState({
     stelling: "",
+    keuzes: {
+      keuze1: {
+        naam: "",
+        stemmen: 0,
+      },
+      keuze2: {
+        naam: "",
+        stemmen: 0,
+      },
+      keuze3: {
+        naam: "",
+        stemmen: 0,
+      },
+      keuze4: {
+        naam: "",
+        stemmen: 0,
+      },
+    },
     door: "",
   });
   const router = useRouter();
@@ -30,13 +48,12 @@ export default function AddStellingForm() {
   const handleMutation = (e: any) => {
     e.preventDefault();
 
+    if (formData.keuzes.keuze3 === null ?? "") formData.keuzes.keuze3.naam = "";
+    if (formData.keuzes.keuze4 === null ?? "") formData.keuzes.keuze4.naam = "";
+
     addMutation({
       stelling: formData.stelling,
-      keuzes: {
-        voor: 0,
-        tegen: 0,
-        onbeslist: 0,
-      },
+      keuzes: formData.keuzes,
       door: user.username ?? "een gebruiker",
     });
     toast.success(`Stelling ${formData.stelling} toegevoegd!`);
@@ -63,6 +80,7 @@ export default function AddStellingForm() {
             <div>
               <Label htmlFor="stelling">Stelling</Label>
               <Input
+                required
                 name="stelling"
                 onChange={(e) =>
                   setFormData({ ...formData, stelling: e.target.value })
@@ -70,8 +88,77 @@ export default function AddStellingForm() {
               />
             </div>
             <div>
+              <Label htmlFor="keuzes">Keuzes</Label>
+              <Input
+                required
+                name="keuzes"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    keuzes: {
+                      ...formData.keuzes,
+                      keuze1: {
+                        naam: e.target.value,
+                        stemmen: 0,
+                      },
+                    },
+                  })
+                }
+              />
+              <Input
+                required
+                name="keuzes"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    keuzes: {
+                      ...formData.keuzes,
+                      keuze2: {
+                        naam: e.target.value,
+                        stemmen: 0,
+                      },
+                    },
+                  })
+                }
+              />
+              <p className="pt-2 text-xs text-muted-foreground">
+                (optionele keuzes)
+              </p>
+              <Input
+                name="keuzes"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    keuzes: {
+                      ...formData.keuzes,
+                      keuze3: {
+                        naam: e.target.value,
+                        stemmen: 0,
+                      },
+                    },
+                  })
+                }
+              />
+              <Input
+                name="keuzes"
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    keuzes: {
+                      ...formData.keuzes,
+                      keuze4: {
+                        naam: e.target.value,
+                        stemmen: 0,
+                      },
+                    },
+                  })
+                }
+              />
+            </div>
+            <div>
               <Label htmlFor="door">Door</Label>
               <Input
+                required
                 name="door"
                 value={user.username ?? "een gebruiker"}
                 disabled
