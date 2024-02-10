@@ -84,7 +84,27 @@ export const updateStelling = mutation(
         .toLowerCase()
         .replace(/[^a-zA-Z0-9]/g, "")
         .replace("/ /g", "-"),
-      keuzes: keuzes,
+      keuzes: {
+        keuze1: {
+          naam: keuzes.keuze1.naam,
+          stemmen: document.keuzes.keuze1.stemmen,
+        },
+        keuze2: {
+          naam: keuzes.keuze2.naam,
+          stemmen: document.keuzes.keuze2.stemmen,
+        },
+        keuze3: keuzes.keuze3
+          ? {
+              naam: keuzes.keuze3.naam,
+              stemmen: document.keuzes.keuze3.stemmen,
+            }
+          : undefined,
+        keuze4: keuzes.keuze4
+          ? {
+              naam: keuzes.keuze4.naam,
+            }
+          : undefined,
+      },
       stelling: stelling,
     });
   }
