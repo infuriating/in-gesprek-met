@@ -102,6 +102,7 @@ export const updateStelling = mutation(
         keuze4: keuzes.keuze4
           ? {
               naam: keuzes.keuze4.naam,
+              stemmen: document.keuzes.keuze4.stemmen,
             }
           : undefined,
       },
