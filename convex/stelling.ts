@@ -96,13 +96,13 @@ export const updateStelling = mutation(
         keuze3: keuzes.keuze3
           ? {
               naam: keuzes.keuze3.naam,
-              stemmen: document.keuzes.keuze3.stemmen,
+              stemmen: document.keuzes.keuze3.stemmen || 0,
             }
           : undefined,
         keuze4: keuzes.keuze4
           ? {
               naam: keuzes.keuze4.naam,
-              stemmen: document.keuzes.keuze4.stemmen,
+              stemmen: document.keuzes.keuze4.stemmen || 0,
             }
           : undefined,
       },
