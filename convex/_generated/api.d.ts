@@ -14,6 +14,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as actieveStelling from "../actieveStelling.js";
 import type * as stelling from "../stelling.js";
 import type * as stemmen from "../stemmen.js";
 
@@ -26,6 +27,7 @@ import type * as stemmen from "../stemmen.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  actieveStelling: typeof actieveStelling;
   stelling: typeof stelling;
   stemmen: typeof stemmen;
 }>;
