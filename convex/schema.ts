@@ -17,4 +17,8 @@ export default defineSchema({
     keuze: v.string(),
     keuzeOptie: v.string(),
   }).index("by_userId", ["userId"]),
+
+  actieveStelling: defineTable({
+    stellingSlug: v.string(),
+  }),
 });
