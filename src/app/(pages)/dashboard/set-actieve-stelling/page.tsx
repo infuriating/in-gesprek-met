@@ -5,7 +5,9 @@ import ActieveStelling from "./components/ActieveStelling";
 
 export default async function page() {
   const preloadedStellingen = await preloadQuery(api.stelling.getAll);
-  const actieveStelling = await preloadQuery(api.stelling.getActieveStelling);
+  const actieveStelling = await preloadQuery(
+    api.actieveStelling.getActieveStelling
+  );
   return (
     <ActieveStelling
       preloadedStellingen={preloadedStellingen}
