@@ -1,8 +1,16 @@
 import { preloadQuery } from "convex/nextjs";
 import { api } from "../../../../convex/_generated/api";
-import LatestThreeStellingen from "./components/LatestThreeStellingen";
+import Landing from "./components/Landing";
 
 export default async function ArtistsWrapper() {
   const preloadedStellingen = await preloadQuery(api.stelling.getLatestThree);
-  return <LatestThreeStellingen preloadedStellingen={preloadedStellingen} />;
+  const actieveStelling = await preloadQuery(
+    api.actieveStelling.getActieveStelling
+  );
+  return (
+    <Landing
+      preloadedStellingen={preloadedStellingen}
+      actieveStelling={actieveStelling}
+    />
+  );
 }
