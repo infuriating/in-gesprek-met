@@ -1,3 +1,5 @@
+"use client";
+
 import { api } from "../../../../../../../convex/_generated/api";
 import { Preloaded, useMutation, usePreloadedQuery } from "convex/react";
 import { useUser } from "@clerk/nextjs";

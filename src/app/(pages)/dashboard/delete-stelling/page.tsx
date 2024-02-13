@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { api } from "../../../../../convex/_generated/api";
 import { preloadQuery } from "convex/nextjs";
