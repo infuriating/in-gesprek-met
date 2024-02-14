@@ -27,11 +27,18 @@ export default function Stelling(params: {
     <div>
       <div className="py-2">
         <h2 className="text-2xl font-bold">{stelling.stelling}</h2>
-        <p className="text-muted-foreground">
-          Stelling van{" "}
-          <span className="font-medium text-secondary-foreground">
-            {stelling.door}
-          </span>
+        <p className="font-medium text-muted-foreground">
+          {stelling.beeindigd ? (
+            <>
+              Deze stelling is
+              <span className="font-medium text-red-500"> beeindigd</span>
+            </>
+          ) : (
+            <>
+              Deze stelling is
+              <span className="font-medium text-white"> actief</span>
+            </>
+          )}
         </p>
       </div>
 

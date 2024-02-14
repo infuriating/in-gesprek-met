@@ -40,15 +40,15 @@ export default function Stellingen(params: {
               <CardTitle>{stelling.stelling}</CardTitle>
               <CardDescription>
                 {stelling.beeindigd ? (
-                  <p>
+                  <>
                     Deze stelling is
                     <span className="font-medium text-red-500"> beeindigd</span>
-                  </p>
+                  </>
                 ) : (
-                  <p>
+                  <>
                     Deze stelling is
                     <span className="font-medium text-white"> actief</span>
-                  </p>
+                  </>
                 )}
               </CardDescription>
             </CardHeader>
