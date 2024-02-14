@@ -7,6 +7,7 @@ export default defineSchema({
     stelling: v.string(),
     keuzes: v.union(v.object({}), v.any()),
     door: v.string(),
+    beeindigd: v.optional(v.boolean()),
   })
     .index("by_slug", ["slug"])
     .index("by_stelling", ["stelling"]),
