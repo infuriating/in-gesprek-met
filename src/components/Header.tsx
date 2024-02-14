@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 import { ModeToggle } from "./ui/mode-toggle";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header({
   isSignedIn,
@@ -17,6 +18,9 @@ export default function Header({
   imageUrl: string;
   role: unknown;
 }) {
+  const pathname = usePathname();
+  if (pathname === "/display-actieve-stelling") return;
+
   return (
     <div className="flex justify-between items-center w-full h-16 px-8 border-b">
       <div className="flex items-center gap-x-4">
