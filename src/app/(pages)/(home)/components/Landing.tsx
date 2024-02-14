@@ -17,7 +17,6 @@ import Tabel from "@/components/Tabel";
 import { ArrowRightSquareIcon } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
-import { getTimeAgo } from "@/lib/functions";
 
 export default function Landing(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getLatestThree>;
@@ -45,15 +44,16 @@ export default function Landing(props: {
           <CardHeader>
             <CardTitle>{huidigeStelling[0].stelling}</CardTitle>
             <CardDescription>
-              gemaakt door {huidigeStelling[0].door}
+              Dit is de{" "}
+              <span className="font-medium text-white"> actieve stelling</span>
             </CardDescription>
             <CardContent>
-              <Tabel stelling={huidigeStelling[0]} />
+              <Tabel height={600} stelling={huidigeStelling[0]} />
             </CardContent>
             <CardFooter>
               {user ? (
-                <Link href={`/stellingen/${huidigeStelling[0].slug}`}>
-                  <Button>Bekijk deze stelling</Button>
+                <Link href={`/actieve-stelling`}>
+                  <Button>Bekijk de actieve stelling</Button>
                 </Link>
               ) : (
                 <Button variant={"outline"} disabled>
@@ -64,7 +64,7 @@ export default function Landing(props: {
           </CardHeader>
         </Card>
       )}
-      <p className="py-1 font-medium text-muted-foreground">
+      <p className="pt-8 py-1 font-medium text-muted-foreground">
         De laatste drie stellingen
       </p>
       <div className="grid lg:grid-cols-3 gap-x-6 gap-y-4">
@@ -84,15 +84,20 @@ export default function Landing(props: {
               <CardHeader>
                 <CardTitle>{stelling.stelling}</CardTitle>
                 <CardDescription>
-                  gemaakt door
-                  <span className="text-secondary-foreground font-medium">
-                    {" "}
-                    {stelling.door}
-                    <br />
-                  </span>
-                  <span className="text-xs pt-0.5">
-                    {getTimeAgo(stelling._creationTime)}
-                  </span>
+                  {stelling.beeindigd ? (
+                    <p>
+                      Deze stelling is
+                      <span className="font-medium text-red-500">
+                        {" "}
+                        beeindigd
+                      </span>
+                    </p>
+                  ) : (
+                    <p>
+                      Deze stelling is
+                      <span className="font-medium text-white"> actief</span>
+                    </p>
+                  )}
                 </CardDescription>
               </CardHeader>
               <CardContent className="pl-2">
