@@ -15,12 +15,12 @@ import {
 import Tabel from "@/components/Tabel";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { getTimeAgo } from "@/lib/functions";
 
 export default function Stellingen(params: {
   preloadedStellingen: Preloaded<typeof api.stelling.getAll>;
 }) {
   const stellingen = usePreloadedQuery(params.preloadedStellingen);
+
   return (
     <div className="grid lg:grid-cols-3 gap-x-6 gap-y-4">
       {stellingen.map((stelling, i) => (
@@ -39,15 +39,17 @@ export default function Stellingen(params: {
             <CardHeader>
               <CardTitle>{stelling.stelling}</CardTitle>
               <CardDescription>
-                gemaakt door{" "}
-                <span className="text-secondary-foreground font-medium">
-                  {" "}
-                  {stelling.door}
-                  <br />
-                </span>
-                <span className="text-xs pt-0.5">
-                  {getTimeAgo(stelling._creationTime)}
-                </span>
+                {stelling.beeindigd ? (
+                  <p>
+                    Deze stelling is
+                    <span className="font-medium text-red-500"> beeindigd</span>
+                  </p>
+                ) : (
+                  <p>
+                    Deze stelling is
+                    <span className="font-medium text-white"> actief</span>
+                  </p>
+                )}
               </CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
