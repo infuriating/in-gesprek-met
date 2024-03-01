@@ -17,14 +17,15 @@ import {
 } from "@/components/ui/card";
 import Tabel from "@/components/Tabel";
 import { Button } from "@/components/ui/button";
-import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
+import { User } from "@clerk/nextjs/server";
 
 export default function ActieveStelling(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getAll>;
   actieveStelling: Preloaded<typeof api.actieveStelling.getActieveStelling>;
+  user: User | null;
 }) {
-  const { user } = useUser();
+  const user = props.user;
   const userId = user?.id;
 
   const stellingen = usePreloadedQuery(props.preloadedStellingen);
