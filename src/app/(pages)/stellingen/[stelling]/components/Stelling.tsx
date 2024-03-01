@@ -59,7 +59,7 @@ export default function Stelling(params: {
           <span className="font-bold"> {huidigeStem.keuze}</span>
         </p>
       ) : (
-        <p className="pb-4">U heeft nog niet gestemd!</p>
+        <p className="pb-4">U heeft niet voor deze stelling gestemd!</p>
       )}
       <div className="pt-4">
         <Tabel stelling={stelling} />
