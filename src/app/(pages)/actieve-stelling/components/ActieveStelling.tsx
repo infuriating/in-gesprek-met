@@ -39,7 +39,7 @@ export default function ActieveStelling(props: {
   const huidigeStem = useQuery(api.stemmen.getStem, {
     // @ts-expect-error - userId is possibly undefined
     userId,
-    stellingId: huidigeStelling[0]._id,
+    stellingId: huidigeStelling.length > 0 ? huidigeStelling[0]._id : "",
   });
 
   if (!stellingen) return;
@@ -70,61 +70,65 @@ export default function ActieveStelling(props: {
           <span className="font-bold"> {huidigeStem.keuze}</span>
         </p>
       ) : (
-        <p className="pb-4">U heeft nog niet gestemd!</p>
+        huidigeStelling.length > 0 && (
+          <p className="pb-4">U heeft nog niet gestemd!</p>
+        )
       )}
-      <div className="grid md:grid-cols-2 gap-x-6 gap-y-2 pb-4">
-        <Button
-          onClick={() =>
-            stem(
-              huidigeStelling[0]._id,
-              huidigeStelling[0].keuzes.keuze1.naam,
-              "keuze1"
-            )
-          }
-        >
-          Stem voor {huidigeStelling[0].keuzes.keuze1.naam}
-        </Button>
-        <Button
-          variant={"outline"}
-          onClick={() =>
-            stem(
-              huidigeStelling[0]._id,
-              huidigeStelling[0].keuzes.keuze2.naam,
-              "keuze2"
-            )
-          }
-        >
-          Stem voor {huidigeStelling[0].keuzes.keuze2.naam}
-        </Button>
-        {huidigeStelling[0].keuzes.keuze3.naam && (
+      {huidigeStelling.length > 0 && (
+        <div className="grid md:grid-cols-2 gap-x-6 gap-y-2 pb-4">
           <Button
             onClick={() =>
               stem(
                 huidigeStelling[0]._id,
-                huidigeStelling[0].keuzes.keuze3.naam,
-                "keuze3"
+                huidigeStelling[0].keuzes.keuze1.naam,
+                "keuze1"
               )
             }
           >
-            Stem voor {huidigeStelling[0].keuzes.keuze3.naam}
+            Stem voor {huidigeStelling[0].keuzes.keuze1.naam}
           </Button>
-        )}
-        {huidigeStelling[0].keuzes.keuze4.naam && (
           <Button
             variant={"outline"}
             onClick={() =>
               stem(
                 huidigeStelling[0]._id,
-                huidigeStelling[0].keuzes.keuze4.naam,
-                "keuze4"
+                huidigeStelling[0].keuzes.keuze2.naam,
+                "keuze2"
               )
             }
           >
-            Stem voor {huidigeStelling[0].keuzes.keuze4.naam}
+            Stem voor {huidigeStelling[0].keuzes.keuze2.naam}
           </Button>
-        )}
-      </div>
-      {huidigeStelling && (
+          {huidigeStelling[0].keuzes.keuze3.naam && (
+            <Button
+              onClick={() =>
+                stem(
+                  huidigeStelling[0]._id,
+                  huidigeStelling[0].keuzes.keuze3.naam,
+                  "keuze3"
+                )
+              }
+            >
+              Stem voor {huidigeStelling[0].keuzes.keuze3.naam}
+            </Button>
+          )}
+          {huidigeStelling[0].keuzes.keuze4.naam && (
+            <Button
+              variant={"outline"}
+              onClick={() =>
+                stem(
+                  huidigeStelling[0]._id,
+                  huidigeStelling[0].keuzes.keuze4.naam,
+                  "keuze4"
+                )
+              }
+            >
+              Stem voor {huidigeStelling[0].keuzes.keuze4.naam}
+            </Button>
+          )}
+        </div>
+      )}
+      {huidigeStelling.length > 0 ? (
         <Card>
           <CardHeader>
             <CardTitle>{huidigeStelling[0].stelling}</CardTitle>
@@ -134,6 +138,15 @@ export default function ActieveStelling(props: {
             <CardContent>
               <Tabel height={650} stelling={huidigeStelling[0]} />
             </CardContent>
+          </CardHeader>
+        </Card>
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>Geen actieve stelling</CardTitle>
+            <CardDescription>
+              Er is momenteel nog geen actieve stelling.
+            </CardDescription>
           </CardHeader>
         </Card>
       )}

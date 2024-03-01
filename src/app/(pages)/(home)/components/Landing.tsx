@@ -40,7 +40,7 @@ export default function Landing(props: {
           <p className="text-secondary-foreground">Bekijk alle stellingen</p>
         </Button>
       </Link>
-      {huidigeStelling && (
+      {huidigeStelling.length > 0 ? (
         <Card>
           <CardHeader>
             <CardTitle>{huidigeStelling[0].stelling}</CardTitle>
@@ -62,6 +62,15 @@ export default function Landing(props: {
                 </Button>
               )}
             </CardFooter>
+          </CardHeader>
+        </Card>
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>Geen actieve stelling</CardTitle>
+            <CardDescription>
+              Er is momenteel nog geen actieve stelling.
+            </CardDescription>
           </CardHeader>
         </Card>
       )}

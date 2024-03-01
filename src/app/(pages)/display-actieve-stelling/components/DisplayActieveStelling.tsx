@@ -25,7 +25,7 @@ export default function DisplayActieveStelling(props: {
 
   return (
     <>
-      {huidigeStelling && (
+      {huidigeStelling.length > 0 ? (
         <Card>
           <CardHeader>
             <CardTitle>{huidigeStelling[0].stelling}</CardTitle>
@@ -48,6 +48,15 @@ export default function DisplayActieveStelling(props: {
                 </div>
               </div>
             </CardContent>
+          </CardHeader>
+        </Card>
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>Geen actieve stelling</CardTitle>
+            <CardDescription>
+              Er is momenteel nog geen actieve stelling.
+            </CardDescription>
           </CardHeader>
         </Card>
       )}
