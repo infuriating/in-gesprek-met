@@ -4,29 +4,29 @@ import React from "react";
 import { api } from "../../../../../../convex/_generated/api";
 import { Preloaded, usePreloadedQuery, useQuery } from "convex/react";
 import Tabel from "../../../../../components/Tabel";
-import { useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { User } from "@clerk/nextjs/server";
 
 export default function Stelling(params: {
   preloadedStelling: Preloaded<typeof api.stelling.getStelling>;
+  user: User | null;
 }) {
-  const { user } = useUser();
+  const user = params.user;
   const userId = user?.id;
 
   const stelling = usePreloadedQuery(params.preloadedStelling);
   const actieveStelling = useQuery(api.actieveStelling.getActieveStelling);
 
   const huidigeStem = useQuery(api.stemmen.getStem, {
-    // @ts-expect-error - userId is possibly undefined
+    // @ts-expect-error - string | undefined is not assignable to type string
     userId,
     // @ts-expect-error - stelling is possibly null
-    stellingId: stelling.length > 0 ? stelling._id : "",
+    stellingId: stelling._id,
   });
 
   if (!stelling) return <></>;
   if (!userId) return <></>;
-
   return (
     <div>
       <div className="py-2">
