@@ -22,17 +22,16 @@ export default function Header({
   if (pathname === "/display-actieve-stelling") return;
 
   return (
-    <div className="flex justify-between items-center w-full h-16 px-8 border-b">
-      <div className="flex items-center gap-x-4">
+    <div className="flex justify-between items-center w-full h-20 px-8 border-b">
+      <div className="flex items-center h-full">
         <Link href="/">
-          {/* <Image
-          src="/logo.png"
-          alt="logo"
-          className="h-10"
-          width={40}
-          height={40}
-        /> */}
-          <h1 className="text-xl font-bold">StemApp</h1>
+          <Image
+            src="/logo.png"
+            alt="logo"
+            className="h-16 w-full object-contain"
+            width={300}
+            height={300}
+          />
         </Link>
       </div>
       <div className="flex items-center gap-x-4">
