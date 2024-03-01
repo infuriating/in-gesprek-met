@@ -5,6 +5,8 @@ import { api } from "../../../../../../convex/_generated/api";
 import { Preloaded, usePreloadedQuery, useQuery } from "convex/react";
 import Tabel from "../../../../../components/Tabel";
 import { useUser } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Stelling(params: {
   preloadedStelling: Preloaded<typeof api.stelling.getStelling>;
@@ -13,6 +15,8 @@ export default function Stelling(params: {
   const userId = user?.id;
 
   const stelling = usePreloadedQuery(params.preloadedStelling);
+  const actieveStelling = useQuery(api.actieveStelling.getActieveStelling);
+
   const huidigeStem = useQuery(api.stemmen.getStem, {
     // @ts-expect-error - userId is possibly undefined
     userId,
@@ -27,19 +31,26 @@ export default function Stelling(params: {
     <div>
       <div className="py-2">
         <h2 className="text-2xl font-bold">{stelling.stelling}</h2>
-        <p className="font-medium text-muted-foreground">
-          {stelling.beeindigd ? (
-            <>
+        <div className="font-medium text-muted-foreground">
+          {!actieveStelling ? (
+            "Status is aan het laden..."
+          ) : stelling.slug !== actieveStelling?.stellingSlug ? (
+            <p>
               Deze stelling is
-              <span className="font-medium text-red-500"> beeindigd</span>
-            </>
+              <span className="font-medium text-red-500"> inactief</span>
+            </p>
           ) : (
-            <>
-              Deze stelling is
-              <span className="font-medium text-white"> actief</span>
-            </>
+            <div className="flex flex-col gap-y-1">
+              <p>
+                Deze stelling is
+                <span className="font-medium text-white"> actief</span>
+              </p>
+              <Link href={"actieve-stelling"} className="py-2">
+                <Button>Stem hier op de stelling!</Button>
+              </Link>
+            </div>
           )}
-        </p>
+        </div>
       </div>
 
       {huidigeStem?.keuze ? (

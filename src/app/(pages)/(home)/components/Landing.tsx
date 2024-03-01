@@ -1,6 +1,6 @@
 "use client";
 
-import { Preloaded, usePreloadedQuery } from "convex/react";
+import { Preloaded, usePreloadedQuery, useQuery } from "convex/react";
 import React from "react";
 import { api } from "../../../../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,7 @@ export default function Landing(props: {
 }) {
   const stellingen = usePreloadedQuery(props.preloadedStellingen);
   const stelling = usePreloadedQuery(props.actieveStelling);
+  const actieveStelling = useQuery(api.actieveStelling.getActieveStelling);
   const { user } = useUser();
   if (!stellingen) return <></>;
 
@@ -84,20 +85,24 @@ export default function Landing(props: {
               <CardHeader>
                 <CardTitle>{stelling.stelling}</CardTitle>
                 <CardDescription>
-                  {stelling.beeindigd ? (
-                    <>
-                      Deze stelling is
-                      <span className="font-medium text-red-500">
-                        {" "}
-                        beeindigd
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      Deze stelling is
-                      <span className="font-medium text-white"> actief</span>
-                    </>
-                  )}
+                  <span className="font-medium text-muted-foreground">
+                    {!actieveStelling ? (
+                      "Status is aan het laden..."
+                    ) : stelling.slug !== actieveStelling?.stellingSlug ? (
+                      <>
+                        Deze stelling is
+                        <span className="font-medium text-red-500">
+                          {" "}
+                          inactief
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        Deze stelling is
+                        <span className="font-medium text-white"> actief</span>
+                      </>
+                    )}
+                  </span>
                 </CardDescription>
               </CardHeader>
               <CardContent className="pl-2">
