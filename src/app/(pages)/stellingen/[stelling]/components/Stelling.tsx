@@ -21,7 +21,7 @@ export default function Stelling(params: {
     // @ts-expect-error - userId is possibly undefined
     userId,
     // @ts-expect-error - stelling is possibly null
-    stellingId: stelling._id,
+    stellingId: stelling.length > 0 ? stelling._id : "",
   });
 
   if (!stelling) return <></>;
@@ -59,7 +59,7 @@ export default function Stelling(params: {
           <span className="font-bold"> {huidigeStem.keuze}</span>
         </p>
       ) : (
-        <p className="pb-4">U heeft niet voor deze stelling gestemd!</p>
+        <p className="pb-4">U heeft nog niet gestemd!</p>
       )}
       <div className="pt-4">
         <Tabel stelling={stelling} />
