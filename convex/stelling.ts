@@ -47,7 +47,6 @@ export const addStelling = mutation({
       door: args.door,
       keuzes: args.keuzes,
       stelling: args.stelling,
-      beeindigd: false,
     });
 
     return stelling;
