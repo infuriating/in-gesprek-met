@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "./Header";
-import PageTransitionEffect from "./PageTransitionEffect";
 import { currentUser } from "@clerk/nextjs";
 
 export default async function Page({
@@ -18,9 +17,7 @@ export default async function Page({
         imageUrl={user?.imageUrl || ""}
         role={role}
       />
-      <PageTransitionEffect>
-        <div className="py-4 px-6">{children}</div>
-      </PageTransitionEffect>
+      <div className="py-4 px-6">{children}</div>
     </div>
   );
 }
