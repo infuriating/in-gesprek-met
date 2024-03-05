@@ -36,7 +36,7 @@ export default function ActieveStelling(params: {
 
   return (
     <div className="flex flex-col gap-y-8">
-      {huidigeStelling && (
+      {huidigeStelling.length > 0 && (
         <Card>
           <CardHeader>
             <CardTitle>{huidigeStelling[0].stelling}</CardTitle>
