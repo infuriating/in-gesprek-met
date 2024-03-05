@@ -18,7 +18,7 @@ import { ArrowRightSquareIcon } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 
 export default function Landing(props: {
-  preloadedStellingen: Preloaded<typeof api.stelling.getLatestThree>;
+  preloadedStellingen: Preloaded<typeof api.stelling.getAll>;
   actieveStelling: Preloaded<typeof api.actieveStelling.getActieveStelling>;
 }) {
   const stellingen = usePreloadedQuery(props.preloadedStellingen);
