@@ -7,12 +7,6 @@ export const getAll = query({
   },
 });
 
-export const getLatestThree = query({
-  handler: async (ctx) => {
-    return await ctx.db.query("stellingen").order("desc").take(3);
-  },
-});
-
 export const getStelling = query({
   args: {
     slug: v.string(),
