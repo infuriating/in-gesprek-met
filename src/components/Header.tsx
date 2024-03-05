@@ -5,7 +5,6 @@ import Image from "next/image";
 import React from "react";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
-import { ModeToggle } from "./ui/mode-toggle";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -61,9 +60,6 @@ export default function Header({
             <Skeleton className="h-10 w-10 rounded-full" />
           </>
         )}
-        <div className="hidden lg:block">
-          <ModeToggle />
-        </div>
       </div>
     </div>
   );
