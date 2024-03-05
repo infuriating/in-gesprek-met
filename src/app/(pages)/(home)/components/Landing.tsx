@@ -32,13 +32,7 @@ export default function Landing(props: {
   );
 
   return (
-    <div>
-      <Link className="px-4" href="/stellingen">
-        <Button className="flex gap-x-2 text-lg" variant={"link"}>
-          <ArrowRightSquareIcon className="h-10 w-10" />
-          <p className="text-secondary-foreground">Bekijk alle stellingen</p>
-        </Button>
-      </Link>
+    <>
       {huidigeStelling.length > 0 ? (
         <Card>
           <CardHeader>
@@ -56,9 +50,9 @@ export default function Landing(props: {
                   <Button>Stem voor de actieve stelling</Button>
                 </Link>
               ) : (
-                <Button variant={"outline"} disabled>
-                  Log in om te stemmen
-                </Button>
+                <Link href={"/actieve-stelling"}>
+                  <Button variant={"outline"}>Log in om te stemmen</Button>
+                </Link>
               )}
             </CardFooter>
           </CardHeader>
@@ -73,6 +67,6 @@ export default function Landing(props: {
           </CardHeader>
         </Card>
       )}
-    </div>
+    </>
   );
 }
