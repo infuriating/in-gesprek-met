@@ -16,7 +16,6 @@ import {
 import Tabel from "@/components/Tabel";
 import { ArrowRightSquareIcon } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
-import { motion } from "framer-motion";
 
 export default function Landing(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getLatestThree>;
@@ -54,7 +53,7 @@ export default function Landing(props: {
             <CardFooter>
               {user ? (
                 <Link href={`/actieve-stelling`}>
-                  <Button>Bekijk de actieve stelling</Button>
+                  <Button>Stem voor de actieve stelling</Button>
                 </Link>
               ) : (
                 <Button variant={"outline"} disabled>
@@ -74,64 +73,6 @@ export default function Landing(props: {
           </CardHeader>
         </Card>
       )}
-      <p className="pt-8 py-1 font-medium text-muted-foreground">
-        De laatste drie stellingen
-      </p>
-      <div className="grid lg:grid-cols-3 gap-x-6 gap-y-4">
-        {stellingen.map((stelling, i) => (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: i * 0.15,
-              damping: 10,
-              duration: 0.45,
-              type: "spring",
-            }}
-            key={stelling._id}
-          >
-            <Card>
-              <CardHeader>
-                <CardTitle>{stelling.stelling}</CardTitle>
-                <CardDescription>
-                  <span className="font-medium text-muted-foreground">
-                    {!actieveStelling ? (
-                      "Status is aan het laden..."
-                    ) : stelling.slug !== actieveStelling?.stellingSlug ? (
-                      <>
-                        Deze stelling is
-                        <span className="font-medium text-red-500">
-                          {" "}
-                          inactief
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        Deze stelling is
-                        <span className="font-medium text-white"> actief</span>
-                      </>
-                    )}
-                  </span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pl-2">
-                <Tabel stelling={stelling} height={200} />
-              </CardContent>
-              <CardFooter>
-                {user ? (
-                  <Link href={`/stellingen/${stelling.slug}`}>
-                    <Button>Bekijk deze stelling</Button>
-                  </Link>
-                ) : (
-                  <Button variant={"outline"} disabled>
-                    Log in om te stemmen
-                  </Button>
-                )}
-              </CardFooter>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
     </div>
   );
 }
