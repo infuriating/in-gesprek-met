@@ -10,12 +10,10 @@ import React, { useState } from "react";
 import { api } from "../../../../../convex/_generated/api";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Tabel from "@/components/Tabel";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { User } from "@clerk/nextjs/server";
@@ -65,80 +63,20 @@ export default function ActieveStelling(props: {
 
   return (
     <>
-      {huidigeStem?.keuze ? (
-        <p className="pb-4">
-          Uw huidige keuze is:
-          <span className="font-bold"> {huidigeStem.keuze}</span>
-        </p>
-      ) : (
-        huidigeStelling.length > 0 && (
-          <p className="pb-4">U heeft nog niet gestemd!</p>
-        )
-      )}
-      {huidigeStelling.length > 0 && (
-        <div className="grid md:grid-cols-2 gap-x-6 gap-y-2 pb-4">
-          <Button
-            onClick={() =>
-              stem(
-                huidigeStelling[0]._id,
-                huidigeStelling[0].keuzes.keuze1.naam,
-                "keuze1"
-              )
-            }
-          >
-            Stem voor {huidigeStelling[0].keuzes.keuze1.naam}
-          </Button>
-          <Button
-            variant={"outline"}
-            onClick={() =>
-              stem(
-                huidigeStelling[0]._id,
-                huidigeStelling[0].keuzes.keuze2.naam,
-                "keuze2"
-              )
-            }
-          >
-            Stem voor {huidigeStelling[0].keuzes.keuze2.naam}
-          </Button>
-          {huidigeStelling[0].keuzes.keuze3.naam && (
-            <Button
-              onClick={() =>
-                stem(
-                  huidigeStelling[0]._id,
-                  huidigeStelling[0].keuzes.keuze3.naam,
-                  "keuze3"
-                )
-              }
-            >
-              Stem voor {huidigeStelling[0].keuzes.keuze3.naam}
-            </Button>
-          )}
-          {huidigeStelling[0].keuzes.keuze4.naam && (
-            <Button
-              variant={"outline"}
-              onClick={() =>
-                stem(
-                  huidigeStelling[0]._id,
-                  huidigeStelling[0].keuzes.keuze4.naam,
-                  "keuze4"
-                )
-              }
-            >
-              Stem voor {huidigeStelling[0].keuzes.keuze4.naam}
-            </Button>
-          )}
-        </div>
-      )}
       {huidigeStelling.length > 0 ? (
-        <Card>
+        <Card className="py-4 mb-4">
           <CardHeader>
             <CardTitle>{huidigeStelling[0].stelling}</CardTitle>
             <CardDescription>
-              gemaakt door {huidigeStelling[0].door}
+              {huidigeStem?.keuze ? (
+                <>
+                  Uw huidige keuze is:
+                  <span className="font-bold"> {huidigeStem.keuze}</span>
+                </>
+              ) : (
+                huidigeStelling.length > 0 && <>U heeft nog niet gestemd!</>
+              )}
             </CardDescription>
-            <CardContent>
-              <Tabel height={650} stelling={huidigeStelling[0]} />
-            </CardContent>
           </CardHeader>
         </Card>
       ) : (
@@ -150,6 +88,63 @@ export default function ActieveStelling(props: {
             </CardDescription>
           </CardHeader>
         </Card>
+      )}
+
+      {huidigeStelling.length > 0 && (
+        <div className="grid gap-x-6 gap-y-4 pb-4">
+          <Button
+            className="h-24 text-lg"
+            onClick={() =>
+              stem(
+                huidigeStelling[0]._id,
+                huidigeStelling[0].keuzes.keuze1.naam,
+                "keuze1"
+              )
+            }
+          >
+            {huidigeStelling[0].keuzes.keuze1.naam}
+          </Button>
+          <Button
+            className="h-24 text-lg"
+            onClick={() =>
+              stem(
+                huidigeStelling[0]._id,
+                huidigeStelling[0].keuzes.keuze2.naam,
+                "keuze2"
+              )
+            }
+          >
+            {huidigeStelling[0].keuzes.keuze2.naam}
+          </Button>
+          {huidigeStelling[0].keuzes.keuze3.naam && (
+            <Button
+              className="h-24 text-lg"
+              onClick={() =>
+                stem(
+                  huidigeStelling[0]._id,
+                  huidigeStelling[0].keuzes.keuze3.naam,
+                  "keuze3"
+                )
+              }
+            >
+              {huidigeStelling[0].keuzes.keuze3.naam}
+            </Button>
+          )}
+          {huidigeStelling[0].keuzes.keuze4.naam && (
+            <Button
+              className="h-24 text-lg"
+              onClick={() =>
+                stem(
+                  huidigeStelling[0]._id,
+                  huidigeStelling[0].keuzes.keuze4.naam,
+                  "keuze4"
+                )
+              }
+            >
+              {huidigeStelling[0].keuzes.keuze4.naam}
+            </Button>
+          )}
+        </div>
       )}
     </>
   );
