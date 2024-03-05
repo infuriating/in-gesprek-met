@@ -3,7 +3,7 @@ import { api } from "../../../../convex/_generated/api";
 import Landing from "./components/Landing";
 
 export default async function Wrapper() {
-  const preloadedStellingen = await preloadQuery(api.stelling.getLatestThree);
+  const preloadedStellingen = await preloadQuery(api.stelling.getAll);
   const actieveStelling = await preloadQuery(
     api.actieveStelling.getActieveStelling
   );

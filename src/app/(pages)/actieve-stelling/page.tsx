@@ -4,7 +4,7 @@ import ActieveStelling from "./components/ActieveStelling";
 import { currentUser } from "@clerk/nextjs/server";
 
 export default async function Wrapper() {
-  const preloadedStellingen = await preloadQuery(api.stelling.getLatestThree);
+  const preloadedStellingen = await preloadQuery(api.stelling.getAll);
   const actieveStelling = await preloadQuery(
     api.actieveStelling.getActieveStelling
   );
