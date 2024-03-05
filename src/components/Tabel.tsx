@@ -1,34 +1,6 @@
 import React from "react";
 
-import {
-  ResponsiveContainer,
-  BarChart,
-  XAxis,
-  YAxis,
-  Bar,
-  Tooltip,
-} from "recharts";
-
-const TabelTooltipContent = ({
-  active,
-  payload,
-  label,
-}: {
-  active: boolean;
-  payload: { value: string }[] | null;
-  label: string;
-}) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="bg-secondary border flex flex-col justify-center items-center px-4 py-2 rounded-md">
-        <p className="font-bold text-lg">{label}</p>
-        <p className="font-medium">{payload[0].value}</p>
-      </div>
-    );
-  }
-
-  return null;
-};
+import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar } from "recharts";
 
 export default function Tabel({
   stelling,
@@ -81,8 +53,6 @@ export default function Tabel({
           tickLine={false}
           axisLine={false}
         />
-        {/* @ts-expect-error Type '{}' is missing */}
-        <Tooltip content={<TabelTooltipContent />} />
         <Bar
           dataKey="total"
           fill="currentColor"
