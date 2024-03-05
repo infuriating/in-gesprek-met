@@ -47,6 +47,19 @@ export default function ActieveStelling(props: {
   if (!userId) return <></>;
 
   const stem = async (id: string, keuze: string, keuzeOptie: string) => {
+    const now = new Date();
+    const time = now.getTime();
+
+    if (huidigeStem && huidigeStem._creationTime + 10000 > time) {
+      toast.error("Je kan over een paar seconden weer stemmen!", {
+        style: {
+          backgroundColor: "red",
+          color: "white",
+        },
+      });
+      return;
+    }
+
     setVorigeKeuze(keuze);
     await stemMutation({ userId, id, keuze, keuzeOptie });
 
