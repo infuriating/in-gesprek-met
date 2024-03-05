@@ -14,8 +14,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Tabel from "@/components/Tabel";
-import { ArrowRightSquareIcon } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
+import { motion } from "framer-motion";
 
 export default function Landing(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getAll>;
@@ -32,7 +32,17 @@ export default function Landing(props: {
   );
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        delay: 0.125,
+        damping: 10,
+        duration: 0.45,
+        type: "spring",
+      }}
+      key={huidigeStelling[0]._id}
+    >
       {huidigeStelling.length > 0 ? (
         <Card>
           <CardHeader>
@@ -67,6 +77,6 @@ export default function Landing(props: {
           </CardHeader>
         </Card>
       )}
-    </>
+    </motion.div>
   );
 }

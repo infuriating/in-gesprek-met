@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { User } from "@clerk/nextjs/server";
+import { motion } from "framer-motion";
 
 export default function ActieveStelling(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getAll>;
@@ -62,7 +63,17 @@ export default function ActieveStelling(props: {
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        delay: 0.125,
+        damping: 10,
+        duration: 0.45,
+        type: "spring",
+      }}
+      key={huidigeStelling[0]._id}
+    >
       {huidigeStelling.length > 0 ? (
         <Card className="py-4 mb-4">
           <CardHeader>
@@ -146,6 +157,6 @@ export default function ActieveStelling(props: {
           )}
         </div>
       )}
-    </>
+    </motion.div>
   );
 }
