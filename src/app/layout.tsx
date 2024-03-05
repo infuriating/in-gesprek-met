@@ -24,17 +24,10 @@ export default function RootLayout({
       <ConvexClientProvider>
         <html lang="en">
           <body className={inter.className}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <Page>
-                {children}
-                <Toaster />
-              </Page>
-            </ThemeProvider>
+            <Page>
+              {children}
+              <Toaster />
+            </Page>
           </body>
         </html>
       </ConvexClientProvider>
