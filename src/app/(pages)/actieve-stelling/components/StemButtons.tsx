@@ -32,7 +32,7 @@ export default function StemButtons({
     if (stemCooldown > 0) {
       toast.error(`Je kan over ${stemCooldown} seconden weer stemmen!`, {
         style: {
-          backgroundColor: "red",
+          backgroundColor: "#cf4635",
           color: "white",
         },
       });
@@ -44,14 +44,29 @@ export default function StemButtons({
     await stemMutation({ userId, id, keuze, keuzeOptie });
 
     if (huidigeStem?.keuze === keuze) {
-      toast.success(`Uw keuze ${keuze} voor de stelling is verwijderd!`);
+      toast.success(`Uw keuze is verwijderd!`, {
+        style: {
+          backgroundColor: "#002c40",
+          color: "white",
+        },
+      });
       return;
     }
 
     if (vorigeKeuze && vorigeKeuze !== keuze) {
-      toast.success(`Uw keuze is gewijzigd van ${vorigeKeuze} naar ${keuze}!`);
+      toast.success(`Uw keuze is gewijzigd van ${vorigeKeuze} naar ${keuze}!`, {
+        style: {
+          backgroundColor: "#002c40",
+          color: "white",
+        },
+      });
     } else {
-      toast.success(`Uw keuze ${keuze} voor de stelling is geregistreerd!`);
+      toast.success(`Uw keuze is geregistreerd!`, {
+        style: {
+          backgroundColor: "#684c9f",
+          color: "white",
+        },
+      });
     }
   };
 
