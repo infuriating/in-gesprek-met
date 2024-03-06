@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { User } from "@clerk/nextjs/server";
 import { motion } from "framer-motion";
+import StemButtons from "./StemButtons";
 
 export default function ActieveStelling(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getAll>;
@@ -31,8 +32,6 @@ export default function ActieveStelling(props: {
   const stelling = usePreloadedQuery(props.actieveStelling);
   const stemMutation = useMutation(api.stemmen.addStem);
 
-  const [vorigeKeuze, setVorigeKeuze] = useState<string | null>(null);
-
   const huidigeStelling = stellingen.filter(
     (stellingen) => stelling && stellingen.slug === stelling.stellingSlug
   );
@@ -45,35 +44,6 @@ export default function ActieveStelling(props: {
   if (!stellingen) return;
   if (!stelling) return <></>;
   if (!userId) return <></>;
-
-  const stem = async (id: string, keuze: string, keuzeOptie: string) => {
-    const now = new Date();
-    const time = now.getTime();
-
-    if (huidigeStem && huidigeStem._creationTime + 10000 > time) {
-      toast.error("Je kan over een paar seconden weer stemmen!", {
-        style: {
-          backgroundColor: "red",
-          color: "white",
-        },
-      });
-      return;
-    }
-
-    setVorigeKeuze(keuze);
-    await stemMutation({ userId, id, keuze, keuzeOptie });
-
-    if (huidigeStem?.keuze === keuze) {
-      toast.success(`Uw keuze ${keuze} voor de stelling is verwijderd!`);
-      return;
-    }
-
-    if (vorigeKeuze && vorigeKeuze !== keuze) {
-      toast.success(`Uw keuze is gewijzigd van ${vorigeKeuze} naar ${keuze}!`);
-    } else {
-      toast.success(`Uw keuze ${keuze} voor de stelling is geregistreerd!`);
-    }
-  };
 
   return (
     <motion.div
@@ -115,60 +85,12 @@ export default function ActieveStelling(props: {
       )}
 
       {huidigeStelling.length > 0 && (
-        <div className="grid gap-x-6 gap-y-4 pb-4">
-          <Button
-            className="h-24 text-lg"
-            onClick={() =>
-              stem(
-                huidigeStelling[0]._id,
-                huidigeStelling[0].keuzes.keuze1.naam,
-                "keuze1"
-              )
-            }
-          >
-            {huidigeStelling[0].keuzes.keuze1.naam}
-          </Button>
-          <Button
-            className="h-24 text-lg"
-            onClick={() =>
-              stem(
-                huidigeStelling[0]._id,
-                huidigeStelling[0].keuzes.keuze2.naam,
-                "keuze2"
-              )
-            }
-          >
-            {huidigeStelling[0].keuzes.keuze2.naam}
-          </Button>
-          {huidigeStelling[0].keuzes.keuze3.naam && (
-            <Button
-              className="h-24 text-lg"
-              onClick={() =>
-                stem(
-                  huidigeStelling[0]._id,
-                  huidigeStelling[0].keuzes.keuze3.naam,
-                  "keuze3"
-                )
-              }
-            >
-              {huidigeStelling[0].keuzes.keuze3.naam}
-            </Button>
-          )}
-          {huidigeStelling[0].keuzes.keuze4.naam && (
-            <Button
-              className="h-24 text-lg"
-              onClick={() =>
-                stem(
-                  huidigeStelling[0]._id,
-                  huidigeStelling[0].keuzes.keuze4.naam,
-                  "keuze4"
-                )
-              }
-            >
-              {huidigeStelling[0].keuzes.keuze4.naam}
-            </Button>
-          )}
-        </div>
+        <StemButtons
+          huidigeStelling={huidigeStelling}
+          userId={userId}
+          stemMutation={stemMutation}
+          huidigeStem={huidigeStem}
+        />
       )}
     </motion.div>
   );
