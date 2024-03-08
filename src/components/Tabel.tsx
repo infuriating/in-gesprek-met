@@ -52,6 +52,7 @@ export default function Tabel({
           fontSize={12}
           tickLine={false}
           axisLine={false}
+          interval={1}
         />
         <Bar
           dataKey="total"
