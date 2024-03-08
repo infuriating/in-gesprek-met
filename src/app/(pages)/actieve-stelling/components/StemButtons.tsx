@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { api } from "../../../../../convex/_generated/api";
 
 export default function StemButtons({
   huidigeStelling,
@@ -71,9 +70,9 @@ export default function StemButtons({
   };
 
   return (
-    <div className="grid gap-x-6 gap-y-4 pb-4">
-      <Button
-        className="h-24 text-lg"
+    <div className="flex items-center flex-col gap-x-6 gap-y-4 pb-4 text-center">
+      <div
+        className="bg-primary flex justify-center items-center rounded-md px-4 py-8 h-24 w-full lg:text-lg cursor-pointer hover:bg-primary/90 transition-colors"
         onClick={() =>
           stem(
             huidigeStelling[0]._id,
@@ -82,10 +81,10 @@ export default function StemButtons({
           )
         }
       >
-        {huidigeStelling[0].keuzes.keuze1.naam}
-      </Button>
-      <Button
-        className="h-24 text-lg"
+        <p>{huidigeStelling[0].keuzes.keuze1.naam}</p>
+      </div>
+      <div
+        className="bg-primary flex justify-center items-center rounded-md px-4 py-8 h-24 w-full lg:text-lg cursor-pointer hover:bg-primary/90 transition-colors"
         onClick={() =>
           stem(
             huidigeStelling[0]._id,
@@ -94,11 +93,11 @@ export default function StemButtons({
           )
         }
       >
-        {huidigeStelling[0].keuzes.keuze2.naam}
-      </Button>
+        <p>{huidigeStelling[0].keuzes.keuze2.naam}</p>
+      </div>
       {huidigeStelling[0].keuzes.keuze3.naam && (
-        <Button
-          className="h-24 text-lg"
+        <div
+          className="bg-primary flex justify-center items-center rounded-md px-4 py-8 h-24 w-full lg:text-lg cursor-pointer hover:bg-primary/90 transition-colors"
           onClick={() =>
             stem(
               huidigeStelling[0]._id,
@@ -107,12 +106,12 @@ export default function StemButtons({
             )
           }
         >
-          {huidigeStelling[0].keuzes.keuze3.naam}
-        </Button>
+          <p>{huidigeStelling[0].keuzes.keuze3.naam}</p>
+        </div>
       )}
       {huidigeStelling[0].keuzes.keuze4.naam && (
-        <Button
-          className="h-24 text-lg"
+        <div
+          className="bg-primary flex justify-center items-center rounded-md px-4 py-8 h-24 w-full lg:text-lg cursor-pointer hover:bg-primary/90 transition-colors"
           onClick={() =>
             stem(
               huidigeStelling[0]._id,
@@ -121,8 +120,8 @@ export default function StemButtons({
             )
           }
         >
-          {huidigeStelling[0].keuzes.keuze4.naam}
-        </Button>
+          <p>{huidigeStelling[0].keuzes.keuze4.naam}</p>
+        </div>
       )}
     </div>
   );
