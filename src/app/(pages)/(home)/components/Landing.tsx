@@ -16,6 +16,7 @@ import {
 import Tabel from "@/components/Tabel";
 import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
+import { BookLock } from "lucide-react";
 
 export default function Landing(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getAll>;
@@ -51,21 +52,32 @@ export default function Landing(props: {
               Dit is de{" "}
               <span className="font-medium text-white"> actieve stelling</span>
             </CardDescription>
-            <CardContent>
-              <Tabel height={600} stelling={huidigeStelling[0]} />
-            </CardContent>
-            <CardFooter>
+          </CardHeader>
+          <CardContent className="relative">
+            <div className="absolute flex flex-col justify-center items-center gap-y-4 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-50">
+              <BookLock size={64} />
+              <p className="max-w-xl text-center font-medium">
+                De huidige peiling kan je op het bord bekijken.
+                {!user && "Stemmen kan alleen als je bent ingelogd."}
+              </p>
               {user ? (
-                <Link href={`/actieve-stelling`}>
-                  <Button>Stem voor de actieve stelling</Button>
+                <Link className="w-full" href={`/actieve-stelling`}>
+                  <Button className="w-full">
+                    Stem voor de actieve stelling
+                  </Button>
                 </Link>
               ) : (
-                <Link href={"/actieve-stelling"}>
-                  <Button variant={"outline"}>Log in om te stemmen</Button>
+                <Link className="w-full" href={"/actieve-stelling"}>
+                  <Button className="w-full" variant={"outline"}>
+                    Log in om te stemmen
+                  </Button>
                 </Link>
               )}
-            </CardFooter>
-          </CardHeader>
+            </div>
+            <div className="blur-xs opacity-80">
+              <Tabel height={450} stelling={huidigeStelling[0]} />
+            </div>
+          </CardContent>
         </Card>
       ) : (
         <Card>
