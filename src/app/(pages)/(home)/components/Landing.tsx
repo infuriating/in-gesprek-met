@@ -1,6 +1,6 @@
 "use client";
 
-import { Preloaded, usePreloadedQuery, useQuery } from "convex/react";
+import { Preloaded, usePreloadedQuery } from "convex/react";
 import React from "react";
 import { api } from "../../../../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Tabel from "@/components/Tabel";
-import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { motion } from "framer-motion";
 import { BookLock } from "lucide-react";
 import { User } from "@clerk/nextjs/server";
@@ -25,7 +25,6 @@ export default function Landing(props: {
 }) {
   const stellingen = usePreloadedQuery(props.preloadedStellingen);
   const stelling = usePreloadedQuery(props.actieveStelling);
-  const actieveStelling = useQuery(api.actieveStelling.getActieveStelling);
 
   const user = props.user;
 
@@ -56,8 +55,8 @@ export default function Landing(props: {
               <span className="font-medium text-white"> actieve stelling</span>
             </CardDescription>
           </CardHeader>
-          <CardContent className="relative">
-            <div className="absolute flex flex-col justify-center items-center gap-y-4 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-50">
+          <CardContent className="relative px-0">
+            <div className="absolute bg-black/30 px-4 py-2 md:px-8 md:py-4 backdrop-blur-sm border border-neutral-100/50 rounded-md flex flex-col justify-center items-center gap-y-4 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-50">
               <BookLock size={64} />
               <p className="max-w-xl text-center font-medium">
                 De huidige peiling kan je op het bord bekijken.
