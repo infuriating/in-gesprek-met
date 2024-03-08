@@ -14,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Tabel from "@/components/Tabel";
-import { useUser } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
 import { BookLock } from "lucide-react";
 
@@ -58,20 +58,28 @@ export default function Landing(props: {
               <BookLock size={64} />
               <p className="max-w-xl text-center font-medium">
                 De huidige peiling kan je op het bord bekijken.
-                {!user && "Stemmen kan alleen als je bent ingelogd."}
+                {!user && " Stemmen kan alleen als je bent ingelogd."}
               </p>
               {user ? (
                 <Link className="w-full" href={`/actieve-stelling`}>
-                  <Button className="w-full">
-                    Stem voor de actieve stelling
-                  </Button>
+                  <Button className="w-full">Stem voor deze stelling</Button>
                 </Link>
               ) : (
-                <Link className="w-full" href={"/actieve-stelling"}>
-                  <Button className="w-full" variant={"outline"}>
-                    Log in om te stemmen
-                  </Button>
-                </Link>
+                <div className="flex flex-col">
+                  <SignUpButton>
+                    <Button className="w-[full]" variant={"outline"}>
+                      Registreer voor een account
+                    </Button>
+                  </SignUpButton>
+                  <SignInButton>
+                    <Button
+                      variant={"link"}
+                      className="w-[full] text-white text-sm"
+                    >
+                      of log hier in
+                    </Button>
+                  </SignInButton>
+                </div>
               )}
             </div>
             <div className="blur-xs opacity-80">
