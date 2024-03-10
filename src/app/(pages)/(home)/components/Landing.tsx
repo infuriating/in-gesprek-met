@@ -84,7 +84,7 @@ export default function Landing(props: {
                 </div>
               )}
             </div>
-            <div className="blur-xs opacity-80">
+            <div className="blur-xs opacity-50">
               <Tabel height={450} stelling={huidigeStelling[0]} />
             </div>
           </CardContent>
