@@ -9,6 +9,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -44,7 +45,7 @@ export default function Landing(props: {
         duration: 0.45,
         type: "spring",
       }}
-      key={huidigeStelling[0]._id}
+      key="Landing Page"
     >
       {huidigeStelling.length > 0 ? (
         <Card>
@@ -67,21 +68,7 @@ export default function Landing(props: {
                   <Button className="w-full">Stem voor deze stelling</Button>
                 </Link>
               ) : (
-                <div className="flex flex-col">
-                  <SignUpButton>
-                    <Button className="w-[full]" variant={"outline"}>
-                      Registreer voor een account
-                    </Button>
-                  </SignUpButton>
-                  <SignInButton>
-                    <Button
-                      variant={"link"}
-                      className="w-[full] text-white text-sm"
-                    >
-                      of log hier in
-                    </Button>
-                  </SignInButton>
-                </div>
+                <AuthenticationButtons />
               )}
             </div>
             <div className="blur-xs opacity-50">
@@ -97,8 +84,49 @@ export default function Landing(props: {
               Er is momenteel nog geen actieve stelling.
             </CardDescription>
           </CardHeader>
+          {user ? (
+            <>
+              <CardContent>
+                Je kan wel alvast naar de stempagina navigeren zodat je direct
+                klaar bent om te stemmen zodra er een stelling actief is.
+              </CardContent>
+              <CardFooter>
+                <Link href="/actieve-stelling">
+                  <Button className="w-full">Ga naar de stempagina</Button>
+                </Link>
+              </CardFooter>
+            </>
+          ) : (
+            <>
+              <CardContent>
+                Je bent nog niet ingelogd, maak alvast een account aan of log in
+                om direct klaar te zijn om te stemmen zodra er een stelling
+                actief is.
+              </CardContent>
+              <CardFooter className="w-full">
+                <AuthenticationButtons />
+              </CardFooter>
+            </>
+          )}
         </Card>
       )}
     </motion.div>
+  );
+}
+
+function AuthenticationButtons() {
+  return (
+    <div className="flex flex-col items-center w-full">
+      <SignUpButton>
+        <Button className="w-[full]" variant={"outline"}>
+          Registreer voor een account
+        </Button>
+      </SignUpButton>
+      <SignInButton>
+        <Button variant={"link"} className="w-[full] text-white text-sm">
+          of log hier in
+        </Button>
+      </SignInButton>
+    </div>
   );
 }
