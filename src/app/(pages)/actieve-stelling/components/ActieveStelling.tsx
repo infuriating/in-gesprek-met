@@ -42,7 +42,6 @@ export default function ActieveStelling(props: {
   });
 
   if (!stellingen) return;
-  if (!stelling) return <></>;
   if (!userId) return <></>;
 
   return (
@@ -55,7 +54,7 @@ export default function ActieveStelling(props: {
         duration: 0.45,
         type: "spring",
       }}
-      key={huidigeStelling[0]._id}
+      key="Actieve Stelling"
     >
       {huidigeStelling.length > 0 ? (
         <Card className="py-4 mb-4">
