@@ -34,15 +34,6 @@ export default function page() {
             </p>
           </div>
         </Link>
-        <Link href={"/dashboard/view-stemmen"}>
-          <div className="flex flex-col items-center justify-center p-4 border rounded-lg shadow-sm transition-all hover:bg-muted">
-            <Table2Icon className="h-12 w-12 text-gray-500 mb-4 dark:text-gray-400" />
-            <h4 className="text-lg font-medium mb-2">Bekijk stemmen</h4>
-            <p className="text-gray-500 text-center dark:text-gray-400">
-              Bekijk wie er op een bepaalde stelling heeft gestemd
-            </p>
-          </div>
-        </Link>
         <Link href={"/dashboard/set-actieve-stelling"}>
           <div className="flex flex-col items-center justify-center p-4 border rounded-lg shadow-sm transition-all hover:bg-muted">
             <Table2Icon className="h-12 w-12 text-gray-500 mb-4 dark:text-gray-400" />
