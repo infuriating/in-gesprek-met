@@ -34,7 +34,7 @@ export default function DisplayActieveStelling(props: {
               {huidigeStelling[0].stelling}
             </CardDescription>
             <CardContent className="pt-4">
-              <Tabel height={500} stelling={huidigeStelling[0]} />
+              <Tabel height={475} stelling={huidigeStelling[0]} />
               <div className="grid grid-cols-2 place-items-center">
                 <div className="flex items-center gap-x-4 text-xl">
                   <div className="bg-primary h-8 w-8 rounded-full" />
@@ -51,7 +51,7 @@ export default function DisplayActieveStelling(props: {
                   </span>
                 </div>
               </div>
-              <div className="grid grid-cols-2 place-items-center py-8 w-full">
+              <div className="grid grid-cols-2 place-items-center pt-8 w-full">
                 <div className="flex flex-col gap-y-4 items-center">
                   <Image
                     src={"/logo.png"}
@@ -61,12 +61,9 @@ export default function DisplayActieveStelling(props: {
                   />
                 </div>
                 <div className="flex flex-col gap-y-4 items-center">
-                  <p className="text-2xl font-bold">
-                    Scan de QR code om te stemmen!
-                  </p>
                   <QRCode
                     value={process.env.NEXT_PUBLIC_QR_CODE_URL!}
-                    size={256}
+                    size={320}
                   />
                 </div>
               </div>
