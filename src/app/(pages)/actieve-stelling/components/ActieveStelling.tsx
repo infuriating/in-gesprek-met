@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { api } from "../../../../../convex/_generated/api";
 import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -70,6 +71,10 @@ export default function ActieveStelling(props: {
               Er is momenteel nog geen actieve stelling.
             </CardDescription>
           </CardHeader>
+          <CardContent>
+            Binnenkort wordt er aangegeven wanneer er weer een nieuwe stelling
+            zal starten.
+          </CardContent>
         </Card>
       )}
 
