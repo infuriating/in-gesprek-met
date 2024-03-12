@@ -16,6 +16,7 @@ import StemButtons from "./StemButtons";
 export default function ActieveStelling(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getAll>;
   actieveStelling: Preloaded<typeof api.actieveStelling.getActieveStelling>;
+  randomId: string;
 }) {
   const [huidigeStem, setHuidigeStem] = useState<string | null>(null);
   const [vorigeKeuze, setVorigeKeuze] = useState<string | null>(null);
@@ -85,6 +86,7 @@ export default function ActieveStelling(props: {
           setHuidigeStem={setHuidigeStem}
           vorigeKeuze={vorigeKeuze}
           setVorigeKeuze={setVorigeKeuze}
+          randomId={props.randomId}
         />
       )}
     </motion.div>
