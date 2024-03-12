@@ -10,21 +10,16 @@ export default function StemButtons({
   setHuidigeStem,
   vorigeKeuze,
   setVorigeKeuze,
+  randomId,
 }: {
   huidigeStelling: any;
   stemMutation: any;
   setHuidigeStem: any;
   vorigeKeuze: string | null;
   setVorigeKeuze: any;
+  randomId: string;
 }) {
   const [stemCooldown, setStemCooldown] = useState(0);
-  const allCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
-  const randomId = Array(12)
-    .fill(0)
-    .map(() =>
-      allCharacters.charAt(Math.floor(Math.random() * allCharacters.length))
-    )
-    .join("");
 
   useEffect(() => {
     if (stemCooldown > 0) {
