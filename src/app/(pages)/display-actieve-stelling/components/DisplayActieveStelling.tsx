@@ -61,10 +61,12 @@ export default function DisplayActieveStelling(props: {
                   />
                 </div>
                 <div className="flex flex-col gap-y-4 items-center">
-                  <QRCode
-                    value={process.env.NEXT_PUBLIC_QR_CODE_URL!}
-                    size={320}
-                  />
+                  <div className="p-4 bg-gradient-to-br from-purple-500 to-pink-600 rounded-sm">
+                    <QRCode
+                      value={process.env.NEXT_PUBLIC_QR_CODE_URL!}
+                      size={288}
+                    />
+                  </div>
                 </div>
               </div>
             </CardContent>
