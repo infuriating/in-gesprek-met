@@ -12,11 +12,10 @@ export default defineSchema({
     .index("by_stelling", ["stelling"]),
 
   stemmen: defineTable({
-    userId: v.string(),
     stellingId: v.string(),
     keuze: v.string(),
     keuzeOptie: v.string(),
-  }).index("by_userId", ["userId"]),
+  }).index("by_stellingId", ["stellingId"]),
 
   actieveStelling: defineTable({
     stellingSlug: v.string(),
