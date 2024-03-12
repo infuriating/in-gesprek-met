@@ -23,6 +23,9 @@ export default function ActieveStelling(params: {
   const stellingen = usePreloadedQuery(params.preloadedStellingen);
   const stelling = usePreloadedQuery(params.actieveStelling);
   const stellingMutation = useMutation(api.actieveStelling.setActiveStelling);
+  const deleteStellingMutation = useMutation(
+    api.actieveStelling.deleteActieveStelling
+  );
 
   const huidigeStelling = stellingen.filter(
     (stellingen) => stelling && stellingen.slug === stelling.stellingSlug
@@ -36,17 +39,30 @@ export default function ActieveStelling(params: {
 
   return (
     <div className="flex flex-col gap-y-8">
-      {huidigeStelling.length > 0 && (
+      {huidigeStelling.length > 0 && stelling !== null && (
         <Card>
           <CardHeader>
             <CardTitle>{huidigeStelling[0].stelling}</CardTitle>
             <CardDescription>
               gemaakt door {huidigeStelling[0].door}
             </CardDescription>
-            <CardContent>
-              <Tabel stelling={huidigeStelling[0]} />
-            </CardContent>
           </CardHeader>
+          <CardContent>
+            <Tabel stelling={huidigeStelling[0]} />
+          </CardContent>
+          <CardFooter className="w-full">
+            <Button
+              className="w-full"
+              onClick={(e) => {
+                e.preventDefault();
+                deleteStellingMutation({ id: stelling._id });
+                toast.success("Actieve stelling is verwijderd");
+              }}
+              variant={"destructive"}
+            >
+              Verwijder actieve stelling
+            </Button>
+          </CardFooter>
         </Card>
       )}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2">
