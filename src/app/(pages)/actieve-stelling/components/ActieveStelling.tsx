@@ -1,12 +1,7 @@
 "use client";
 
-import {
-  Preloaded,
-  useMutation,
-  usePreloadedQuery,
-  useQuery,
-} from "convex/react";
-import React, { useState } from "react";
+import { Preloaded, useMutation, usePreloadedQuery } from "convex/react";
+import React, { useEffect, useState } from "react";
 import { api } from "../../../../../convex/_generated/api";
 import {
   Card,
@@ -14,19 +9,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { User } from "@clerk/nextjs/server";
 import { motion } from "framer-motion";
 import StemButtons from "./StemButtons";
 
 export default function ActieveStelling(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getAll>;
   actieveStelling: Preloaded<typeof api.actieveStelling.getActieveStelling>;
-  user: User | null;
 }) {
-  const user = props.user;
-  const userId = user?.id;
+  const [huidigeStem, setHuidigeStem] = useState<string | null>(null);
+  const [vorigeKeuze, setVorigeKeuze] = useState<string | null>(null);
 
   const stellingen = usePreloadedQuery(props.preloadedStellingen);
   const stelling = usePreloadedQuery(props.actieveStelling);
@@ -35,14 +26,13 @@ export default function ActieveStelling(props: {
   const huidigeStelling = stellingen.filter(
     (stellingen) => stelling && stellingen.slug === stelling.stellingSlug
   );
-  const huidigeStem = useQuery(api.stemmen.getStem, {
-    // @ts-expect-error - userId is possibly undefined
-    userId,
-    stellingId: huidigeStelling.length > 0 ? huidigeStelling[0]._id : "",
-  });
+
+  useEffect(() => {
+    setHuidigeStem(localStorage.getItem("huidigeStem") ?? "");
+    setVorigeKeuze(localStorage.getItem("huidigeStem") ?? "");
+  }, []);
 
   if (!stellingen) return;
-  if (!userId) return <></>;
 
   return (
     <motion.div
@@ -61,10 +51,10 @@ export default function ActieveStelling(props: {
           <CardHeader>
             <CardTitle>{huidigeStelling[0].stelling}</CardTitle>
             <CardDescription>
-              {huidigeStem?.keuze ? (
+              {huidigeStem ? (
                 <>
                   Uw huidige keuze is:
-                  <span className="font-bold"> {huidigeStem.keuze}</span>
+                  <span className="font-bold"> {huidigeStem}</span>
                 </>
               ) : (
                 huidigeStelling.length > 0 && <>U heeft nog niet gestemd!</>
@@ -86,9 +76,10 @@ export default function ActieveStelling(props: {
       {huidigeStelling.length > 0 && (
         <StemButtons
           huidigeStelling={huidigeStelling}
-          userId={userId}
           stemMutation={stemMutation}
-          huidigeStem={huidigeStem}
+          setHuidigeStem={setHuidigeStem}
+          vorigeKeuze={vorigeKeuze}
+          setVorigeKeuze={setVorigeKeuze}
         />
       )}
     </motion.div>
