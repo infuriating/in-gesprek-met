@@ -15,3 +15,12 @@ export const setActiveStelling = mutation(
     }
   }
 );
+
+export const deleteActieveStelling = mutation(
+  async ({ db }, { id }: { id: string }) => {
+    const document = await db.query("actieveStelling").first();
+    if (!document) return;
+
+    await db.delete(document._id);
+  }
+);
