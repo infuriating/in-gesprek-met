@@ -1,22 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
-type Keuze = "voor" | "tegen" | "onbeslist";
-
-export const getStem = query({
-  args: {
-    userId: v.string(),
-    stellingId: v.string(),
-  },
-  handler: async (ctx, args) => {
-    return await ctx.db
-      .query("stemmen")
-      .filter((q) => q.eq(q.field("userId"), args.userId))
-      .filter((q) => q.eq(q.field("stellingId"), args.stellingId))
-      .first();
-  },
-});
-
 export const getStemmenFromStelling = query({
   args: {
     stellingId: v.string(),
@@ -33,12 +17,10 @@ export const addStem = mutation(
   async (
     { db },
     {
-      userId,
       id,
       keuze,
       keuzeOptie,
     }: {
-      userId: string;
       id: string;
       keuze: string;
       keuzeOptie: string;
@@ -51,7 +33,6 @@ export const addStem = mutation(
 
     const stem = await db
       .query("stemmen")
-      .filter((q) => q.eq(q.field("userId"), userId))
       .filter((q) => q.eq(q.field("stellingId"), id))
       .first();
 
@@ -75,7 +56,6 @@ export const addStem = mutation(
     stelling.keuzes[keuzeOptie as keyof typeof stelling.keuzes].stemmen += 1;
 
     await db.insert("stemmen", {
-      userId,
       stellingId: id,
       keuze,
       keuzeOptie,
