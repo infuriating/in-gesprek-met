@@ -18,6 +18,13 @@ export default function StemButtons({
   setVorigeKeuze: any;
 }) {
   const [stemCooldown, setStemCooldown] = useState(0);
+  const allCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const randomId = Array(12)
+    .fill(0)
+    .map(() =>
+      allCharacters.charAt(Math.floor(Math.random() * allCharacters.length))
+    )
+    .join("");
 
   useEffect(() => {
     if (stemCooldown > 0) {
@@ -44,7 +51,7 @@ export default function StemButtons({
     setVorigeKeuze(keuze);
     setHuidigeStem(keuze);
     setStemCooldown(5);
-    await stemMutation({ id, keuze, keuzeOptie });
+    await stemMutation({ randomId, id, keuze, keuzeOptie });
 
     localStorage.setItem("huidigeStem", keuze);
 
