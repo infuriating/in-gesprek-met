@@ -6,16 +6,17 @@ import { toast } from "sonner";
 
 export default function StemButtons({
   huidigeStelling,
-  userId,
   stemMutation,
-  huidigeStem,
+  setHuidigeStem,
+  vorigeKeuze,
+  setVorigeKeuze,
 }: {
   huidigeStelling: any;
-  userId: string;
   stemMutation: any;
-  huidigeStem: any;
+  setHuidigeStem: any;
+  vorigeKeuze: string | null;
+  setVorigeKeuze: any;
 }) {
-  const [vorigeKeuze, setVorigeKeuze] = useState<string | null>(null);
   const [stemCooldown, setStemCooldown] = useState(0);
 
   useEffect(() => {
@@ -39,21 +40,27 @@ export default function StemButtons({
     }
 
     setVorigeKeuze(keuze);
+    setHuidigeStem(keuze);
     setStemCooldown(5);
-    await stemMutation({ userId, id, keuze, keuzeOptie });
+    await stemMutation({ id, keuze, keuzeOptie });
 
-    if (huidigeStem?.keuze === keuze) {
+    localStorage.setItem("huidigeStem", keuze);
+
+    if (vorigeKeuze === keuze) {
       toast.success(`Uw keuze is verwijderd!`, {
         style: {
           backgroundColor: "#002c40",
           color: "white",
         },
       });
+
+      localStorage.setItem("huidigeStem", "");
+      setHuidigeStem(null);
       return;
     }
 
     if (vorigeKeuze && vorigeKeuze !== keuze) {
-      toast.success(`Uw keuze is gewijzigd van ${vorigeKeuze} naar ${keuze}!`, {
+      toast.success(`Uw keuze is gewijzigd!`, {
         style: {
           backgroundColor: "#002c40",
           color: "white",
