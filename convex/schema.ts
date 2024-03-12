@@ -12,6 +12,7 @@ export default defineSchema({
     .index("by_stelling", ["stelling"]),
 
   stemmen: defineTable({
+    randomId: v.string(),
     stellingId: v.string(),
     keuze: v.string(),
     keuzeOptie: v.string(),

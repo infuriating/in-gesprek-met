@@ -17,10 +17,12 @@ export const addStem = mutation(
   async (
     { db },
     {
+      randomId,
       id,
       keuze,
       keuzeOptie,
     }: {
+      randomId: string;
       id: string;
       keuze: string;
       keuzeOptie: string;
@@ -33,6 +35,7 @@ export const addStem = mutation(
 
     const stem = await db
       .query("stemmen")
+      .filter((q) => q.eq(q.field("randomId"), randomId))
       .filter((q) => q.eq(q.field("stellingId"), id))
       .first();
 
@@ -56,6 +59,7 @@ export const addStem = mutation(
     stelling.keuzes[keuzeOptie as keyof typeof stelling.keuzes].stemmen += 1;
 
     await db.insert("stemmen", {
+      randomId,
       stellingId: id,
       keuze,
       keuzeOptie,
