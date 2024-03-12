@@ -39,27 +39,9 @@ export default function Header({
             <Button variant={"outline"}>Dashboard</Button>
           </Link>
         )}
-        {isSignedIn ? (
-          <>
-            <SignOutButton>
-              <Button>Log uit</Button>
-            </SignOutButton>
-            <Image
-              src={imageUrl}
-              alt="user"
-              className="h-10 rounded-full hidden md:block"
-              width={40}
-              height={40}
-            />
-          </>
-        ) : (
-          <>
-            <SignInButton>
-              <Button>Log in</Button>
-            </SignInButton>
-            <Skeleton className="h-10 w-10 rounded-full" />
-          </>
-        )}
+        <Link href="/actieve-stelling">
+          <Button>Stemmen</Button>
+        </Link>
       </div>
     </div>
   );
