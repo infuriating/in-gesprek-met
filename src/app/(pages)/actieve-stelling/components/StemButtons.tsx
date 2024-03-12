@@ -30,7 +30,9 @@ export default function StemButtons({
 
   const stem = async (id: string, keuze: string, keuzeOptie: string) => {
     if (stemCooldown > 0) {
-      toast.error(`Je kan over ${stemCooldown} seconden weer stemmen!`, {
+      toast.error(`Niet zo snel!`, {
+        description: `Je kan over ${stemCooldown} secondes je keuze aanpassen`,
+        descriptionClassName: "group-[.toast]:text-neutral-200",
         style: {
           backgroundColor: "#cf4635",
           color: "white",
