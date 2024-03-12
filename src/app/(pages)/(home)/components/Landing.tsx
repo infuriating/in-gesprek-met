@@ -3,31 +3,24 @@
 import { Preloaded, usePreloadedQuery } from "convex/react";
 import React from "react";
 import { api } from "../../../../../convex/_generated/api";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import Tabel from "@/components/Tabel";
 import { motion } from "framer-motion";
-import { BookLock } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
+import Link from "next/link";
 
 export default function Landing(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getAll>;
   actieveStelling: Preloaded<typeof api.actieveStelling.getActieveStelling>;
 }) {
   const stellingen = usePreloadedQuery(props.preloadedStellingen);
-  const stelling = usePreloadedQuery(props.actieveStelling);
   if (!stellingen) return <></>;
-
-  const huidigeStelling = stellingen.filter(
-    (stellingen) => stelling && stellingen.slug === stelling.stellingSlug
-  );
 
   return (
     <motion.div
@@ -41,66 +34,72 @@ export default function Landing(props: {
       }}
       key="Landing Page"
     >
-      {huidigeStelling.length > 0 ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>{huidigeStelling[0].stelling}</CardTitle>
-            <CardDescription>
-              Dit is de{" "}
-              <span className="font-medium text-white"> actieve stelling</span>
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="relative px-0">
-            <div className="absolute bg-black/30 px-4 py-2 md:px-8 md:py-4 backdrop-blur-sm border border-neutral-100/50 rounded-md flex flex-col justify-center items-center gap-y-4 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-50">
-              <BookLock size={64} />
-              <p className="max-w-xl text-center font-medium">
-                De huidige peiling kan je op het bord bekijken.
-              </p>
-              <Link className="w-full" href={`/actieve-stelling`}>
-                <Button className="w-full">Stem voor deze stelling</Button>
+      <div className="flex flex-col items-center text-center gap-y-2 py-6">
+        <p className="text-4xl font-semibold">Bedankt voor het stemmen!</p>
+        <p className="max-w-xl text-lg text-neutral-300">
+          Wij hopen dat jullie hebben genoten van het evenement en dat jullie
+          van de mogelijkheid hadden om live mee te stemmen!
+        </p>
+      </div>
+      <p className="text-center text-xl py-2 font-bold">
+        Zie hieronder de uitslagen van de stellingen
+      </p>
+      <div className="grid md:grid-cols-3 gap-6 py-4">
+        {stellingen.map((stelling) => (
+          <Card key={stelling._id}>
+            <CardHeader>
+              <CardTitle>{stelling.stelling}</CardTitle>
+              <CardDescription>
+                {stelling.keuzes.keuze1.naam}:{" "}
+                <span className="font-bold text-white">
+                  {stelling.keuzes.keuze1.stemmen} stemmen
+                </span>
+              </CardDescription>
+              <CardDescription>
+                {stelling.keuzes.keuze2.naam}:{" "}
+                <span className="font-bold text-white">
+                  {stelling.keuzes.keuze2.stemmen} stemmen
+                </span>
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="py-2 px-1">
+              <Tabel height={250} stelling={stelling} />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      <div className="flex flex-col items-center py-2">
+        <p className="text-muted-foreground">Website gemaakt door</p>
+        <div className="grid grid-cols-2 py-4 gap-4 text-center">
+          <div className="border border-neutral-200/20 rounded-md px-6 py-3">
+            <p className="text-xl font-semibold">Lars Werner</p>
+            <div className="py-2 flex justify-center gap-x-4">
+              <Link
+                href={
+                  "https://www.linkedin.com/in/lars-franciscus-andries-werner-a3341125a"
+                }
+                target="_blank"
+              >
+                <Linkedin size={24} fill="white" />
+              </Link>
+              <Link href={"https://github.com/LFAGC"} target="_blank">
+                <Github size={24} fill="white" />
               </Link>
             </div>
-            <div className="blur-xs opacity-50">
-              <Tabel height={450} stelling={huidigeStelling[0]} />
+          </div>
+          <div className="border border-neutral-200/20 rounded-md px-6 py-3">
+            <p className="text-xl font-semibold">Luca Kuiper</p>
+            <div className="py-2 flex justify-center gap-x-4">
+              <Link href={"https://linkedin.com/in/lucakuiper"} target="_blank">
+                <Linkedin size={24} fill="white" />
+              </Link>
+              <Link href={"https://github.com/infuriating"} target="_blank">
+                <Github size={24} fill="white" />
+              </Link>
             </div>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card>
-          <CardHeader>
-            <CardTitle>Geen actieve stelling</CardTitle>
-            <CardDescription>
-              Er is momenteel nog geen actieve stelling.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            Je kan wel alvast naar de stempagina navigeren zodat je direct klaar
-            bent om te stemmen zodra er een stelling actief is.
-          </CardContent>
-          <CardFooter>
-            <Link href="/actieve-stelling">
-              <Button className="w-full">Ga naar de stempagina</Button>
-            </Link>
-          </CardFooter>
-        </Card>
-      )}
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 }
-
-// function AuthenticationButtons() {
-//   return (
-//     <div className="flex flex-col items-center w-full">
-//       <SignUpButton>
-//         <Button className="w-[full]" variant={"outline"}>
-//           Registreer voor een account
-//         </Button>
-//       </SignUpButton>
-//       <SignInButton>
-//         <Button variant={"link"} className="w-[full] text-white text-sm">
-//           of log hier in
-//         </Button>
-//       </SignInButton>
-//     </div>
-//   );
-// }
