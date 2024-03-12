@@ -8,8 +8,17 @@ export default async function Wrapper() {
     api.actieveStelling.getActieveStelling
   );
 
+  const allCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const randomId = Array(12)
+    .fill(0)
+    .map(() =>
+      allCharacters.charAt(Math.floor(Math.random() * allCharacters.length))
+    )
+    .join("");
+
   return (
     <ActieveStelling
+      randomId={randomId}
       preloadedStellingen={preloadedStellingen}
       actieveStelling={actieveStelling}
     />
