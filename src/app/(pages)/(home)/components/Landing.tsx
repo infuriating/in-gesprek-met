@@ -14,21 +14,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Tabel from "@/components/Tabel";
-import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { motion } from "framer-motion";
 import { BookLock } from "lucide-react";
-import { User } from "@clerk/nextjs/server";
 
 export default function Landing(props: {
   preloadedStellingen: Preloaded<typeof api.stelling.getAll>;
   actieveStelling: Preloaded<typeof api.actieveStelling.getActieveStelling>;
-  user: User | null;
 }) {
   const stellingen = usePreloadedQuery(props.preloadedStellingen);
   const stelling = usePreloadedQuery(props.actieveStelling);
-
-  const user = props.user;
-
   if (!stellingen) return <></>;
 
   const huidigeStelling = stellingen.filter(
@@ -61,15 +55,10 @@ export default function Landing(props: {
               <BookLock size={64} />
               <p className="max-w-xl text-center font-medium">
                 De huidige peiling kan je op het bord bekijken.
-                {!user && " Stemmen kan alleen als je bent ingelogd."}
               </p>
-              {user ? (
-                <Link className="w-full" href={`/actieve-stelling`}>
-                  <Button className="w-full">Stem voor deze stelling</Button>
-                </Link>
-              ) : (
-                <AuthenticationButtons />
-              )}
+              <Link className="w-full" href={`/actieve-stelling`}>
+                <Button className="w-full">Stem voor deze stelling</Button>
+              </Link>
             </div>
             <div className="blur-xs opacity-50">
               <Tabel height={450} stelling={huidigeStelling[0]} />
@@ -84,49 +73,34 @@ export default function Landing(props: {
               Er is momenteel nog geen actieve stelling.
             </CardDescription>
           </CardHeader>
-          {user ? (
-            <>
-              <CardContent>
-                Je kan wel alvast naar de stempagina navigeren zodat je direct
-                klaar bent om te stemmen zodra er een stelling actief is.
-              </CardContent>
-              <CardFooter>
-                <Link href="/actieve-stelling">
-                  <Button className="w-full">Ga naar de stempagina</Button>
-                </Link>
-              </CardFooter>
-            </>
-          ) : (
-            <>
-              <CardContent>
-                Je bent nog niet ingelogd, maak alvast een account aan of log in
-                om direct klaar te zijn om te stemmen zodra er een stelling
-                actief is.
-              </CardContent>
-              <CardFooter className="w-full">
-                <AuthenticationButtons />
-              </CardFooter>
-            </>
-          )}
+          <CardContent>
+            Je kan wel alvast naar de stempagina navigeren zodat je direct klaar
+            bent om te stemmen zodra er een stelling actief is.
+          </CardContent>
+          <CardFooter>
+            <Link href="/actieve-stelling">
+              <Button className="w-full">Ga naar de stempagina</Button>
+            </Link>
+          </CardFooter>
         </Card>
       )}
     </motion.div>
   );
 }
 
-function AuthenticationButtons() {
-  return (
-    <div className="flex flex-col items-center w-full">
-      <SignUpButton>
-        <Button className="w-[full]" variant={"outline"}>
-          Registreer voor een account
-        </Button>
-      </SignUpButton>
-      <SignInButton>
-        <Button variant={"link"} className="w-[full] text-white text-sm">
-          of log hier in
-        </Button>
-      </SignInButton>
-    </div>
-  );
-}
+// function AuthenticationButtons() {
+//   return (
+//     <div className="flex flex-col items-center w-full">
+//       <SignUpButton>
+//         <Button className="w-[full]" variant={"outline"}>
+//           Registreer voor een account
+//         </Button>
+//       </SignUpButton>
+//       <SignInButton>
+//         <Button variant={"link"} className="w-[full] text-white text-sm">
+//           of log hier in
+//         </Button>
+//       </SignInButton>
+//     </div>
+//   );
+// }
